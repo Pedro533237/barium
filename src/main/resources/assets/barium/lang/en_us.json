@@ -118,6 +118,8 @@
   "tooltip.barium.reduce_ambient_particles": "Reduces the frequency of ambient particle effects (torch smoke, water drips).",
   "option.barium.enable_hopper_culling": "Enable Hopper Culling",
   "tooltip.barium.enable_hopper_culling": "Reduces the update frequency of distant hoppers. Huge CPU saver for farms.",
+  "option.barium.enable_background_event_throttling": "Enable Background Event Throttling",
+  "tooltip.barium.enable_background_event_throttling": "Throttles pollEvents while the game window is unfocused to lower CPU usage.",
 
   "option.barium.enable_flood_fill_culling": "Enable Flood-Fill Culling",
   "tooltip.barium.enable_flood_fill_culling": "A robust algorithm that discovers visible chunks by 'flooding' out from the camera. Very stable and effective, prevents rendering anything the player can't see. Recommended ON.",

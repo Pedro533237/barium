@@ -21,6 +21,7 @@
 		"ParticleAccessor",
 		"ParticleManagerMixin",
 		"ParticleMixin",
+		"RenderSystemMixin",
 		"SectionBuilderMixin",
 		"SpriteLoaderMixin",
 		"TextureAtlasMixin",

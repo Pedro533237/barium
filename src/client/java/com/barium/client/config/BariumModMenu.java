@@ -119,6 +119,8 @@ public class BariumModMenu implements ModMenuApi {
                     .setDefaultValue(defaults.REDUCE_AMBIENT_PARTICLES).setTooltip(Text.translatable("tooltip.barium.reduce_ambient_particles")).setSaveConsumer(v -> BariumConfig.C.REDUCE_AMBIENT_PARTICLES = v).build());
             mainCategory.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.barium.enable_hopper_culling"), BariumConfig.C.ENABLE_HOPPER_TICK_CULLING)
                     .setDefaultValue(defaults.ENABLE_HOPPER_TICK_CULLING).setTooltip(Text.translatable("tooltip.barium.enable_hopper_culling")).setSaveConsumer(v -> BariumConfig.C.ENABLE_HOPPER_TICK_CULLING = v).build());
+            mainCategory.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.barium.enable_background_event_throttling"), BariumConfig.C.ENABLE_BACKGROUND_EVENT_THROTTLING)
+                    .setDefaultValue(defaults.ENABLE_BACKGROUND_EVENT_THROTTLING).setTooltip(Text.translatable("tooltip.barium.enable_background_event_throttling")).setSaveConsumer(v -> BariumConfig.C.ENABLE_BACKGROUND_EVENT_THROTTLING = v).build());
             mainCategory.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.barium.enable_fast_math"), BariumConfig.C.ENABLE_FAST_MATH)
                 .setDefaultValue(defaults.ENABLE_FAST_MATH).setTooltip(Text.translatable("tooltip.barium.enable_fast_math")).setSaveConsumer(v -> BariumConfig.C.ENABLE_FAST_MATH = v).build());
 
