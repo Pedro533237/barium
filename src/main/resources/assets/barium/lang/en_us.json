@@ -104,6 +104,10 @@
   "tooltip.barium.enable_gui_optimization": "Optimizes GUI rendering performance, similar to Sodium's optimizations. Reduces overhead when rendering interface elements.",
   "option.barium.mipmap_level_override": "Mipmap Level Override (0-4)",
   "tooltip.barium.mipmap_level_override": "Forces a lower texture resolution. Higher values reduce VRAM usage and can improve FPS with resource packs, but make textures blurrier.\nRequires a game restart. 0=Off.",
+  "option.barium.enable_hand_render_throttling": "Enable Hand Render Throttling",
+  "tooltip.barium.enable_hand_render_throttling": "Skips some first-person hand render frames when it is safe. Can lower CPU/GPU cost in heavy scenes.",
+  "option.barium.hand_render_skip_frames": "Hand Render Skip Frames",
+  "tooltip.barium.hand_render_skip_frames": "How many hand frames to skip between renders. 1 = light, 3 = aggressive.",
 
   "option.barium.enable_entity_tick_culling": "Enable Entity Tick Culling",
   "tooltip.barium.enable_entity_tick_culling": "Reduces the update frequency of distant entities' logic (AI).",

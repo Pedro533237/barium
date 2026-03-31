@@ -14,6 +14,7 @@
 		"FrameGraphBuilderMixin",
 		"EntityRendererMixin",
 		"GameRendererMixin",
+		"HandRenderMixin",
 		"GuiRendererMixin",
 		"DrawContextMixin",
 		"HandledScreenMixin",

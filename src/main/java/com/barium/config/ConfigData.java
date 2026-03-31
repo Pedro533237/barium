@@ -82,6 +82,8 @@ public class ConfigData {
     public boolean DISABLE_TEXTURE_ANIMATIONS = false;
     public boolean ENABLE_GUI_OPTIMIZATION = true;
     public int MIPMAP_LEVEL_OVERRIDE = 0;
+    public boolean ENABLE_HAND_RENDER_THROTTLING = false;
+    public int HAND_RENDER_SKIP_FRAMES = 1;
 
     // ================== Game Logic & Tick Optimizations ================== //
     public boolean ENABLE_ENTITY_TICK_CULLING = true;
