@@ -11,6 +11,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.profiler.Profilers;
 import net.minecraft.world.BlockRenderView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +28,7 @@ public class BlockRenderManagerMixin {
         if (BariumConfig.C.ENABLE_FACE_CULLING_BETWEEN_BLOCKS) {
             MinecraftClient client = MinecraftClient.getInstance();
             if (client != null) {
-                client.getProfiler().push("barium_face_culling");
+                Profilers.get().push("barium_face_culling");
             }
             try {
                 if (FaceCullingManager.isFullyOccluded(world, pos, state)) {
@@ -39,7 +40,7 @@ public class BlockRenderManagerMixin {
                 }
             } finally {
                 if (client != null) {
-                    client.getProfiler().pop();
+                    Profilers.get().pop();
                 }
             }
         }

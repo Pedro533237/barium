@@ -15,6 +15,7 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.chunk.ChunkBuilder;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.profiler.Profilers;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,11 +40,11 @@ public abstract class WorldRendererMixin {
     private void barium$resetFrameState(CallbackInfo ci) {
         EntityOutlineOptimizer.reset();
         RenderPipelineManager.beginFrame();
-        this.client.getProfiler().push("barium_z_prepass_stage");
+        Profilers.get().push("barium_z_prepass_stage");
         try {
             RenderPipelineManager.beginDepthPrepassIfEnabled();
         } finally {
-            this.client.getProfiler().pop();
+            Profilers.get().pop();
         }
     }
 
@@ -122,11 +123,11 @@ public abstract class WorldRendererMixin {
     }
     @Inject(method = "render", at = @At("TAIL"))
     private void barium$restorePipelineState(CallbackInfo ci) {
-        this.client.getProfiler().push("barium_z_prepass_stage");
+        Profilers.get().push("barium_z_prepass_stage");
         try {
             RenderPipelineManager.endDepthPrepassIfEnabled();
         } finally {
-            this.client.getProfiler().pop();
+            Profilers.get().pop();
         }
     }
 

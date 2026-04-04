@@ -13,6 +13,7 @@ import net.minecraft.client.render.chunk.SectionBuilder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.profiler.Profilers;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -130,13 +131,13 @@ public class SectionBuilderMixin {
                         if (BariumConfig.C.ENABLE_INSTANCED_RENDERING && BariumConfig.C.ENABLE_VERTEX_POOLING) {
                             MinecraftClient client = MinecraftClient.getInstance();
                             if (client != null) {
-                                client.getProfiler().push("barium_instancing_collect");
+                                Profilers.get().push("barium_instancing_collect");
                             }
                             try {
                                 InstancedChunkRenderer.getInstance().recordVisibleFaces(region, mutablePos, state, 0, 0);
                             } finally {
                                 if (client != null) {
-                                    client.getProfiler().pop();
+                                    Profilers.get().pop();
                                 }
                             }
                         }

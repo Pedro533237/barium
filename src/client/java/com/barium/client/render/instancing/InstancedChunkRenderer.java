@@ -35,9 +35,20 @@ public final class InstancedChunkRenderer {
 
         for (Direction direction : Direction.values()) {
             if (FaceCullingManager.shouldRenderFace(world, pos, state, direction)) {
-                pooledFaces.putFace(pos.getX(), pos.getY(), pos.getZ(), direction.getId(), materialId, packedLight, 0);
+                pooledFaces.putFace(pos.getX(), pos.getY(), pos.getZ(), faceId(direction), materialId, packedLight, 0);
             }
         }
+    }
+
+    private int faceId(Direction direction) {
+        return switch (direction) {
+            case DOWN -> 0;
+            case UP -> 1;
+            case NORTH -> 2;
+            case SOUTH -> 3;
+            case WEST -> 4;
+            case EAST -> 5;
+        };
     }
 
     public int flushFaceCount() {
