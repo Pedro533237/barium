@@ -103,7 +103,18 @@ public class GuiRendererOptimizer {
             return false;
         }
 
-        // Evita flicker: não pulamos mais frames inteiros de GUI com conteúdo.
+        // Modo adaptativo para HUD (sem tela aberta): permite pular draws preparados
+        // quando FPS está baixo e não houve mudança relevante no estado visual.
+        if (BariumConfig.C.ENABLE_ADAPTIVE_GUI_FRAME_SKIP
+                && currentScreen == null
+                && BariumClient.getCurrentFps() <= BariumConfig.C.GUI_FRAME_SKIP_FPS_THRESHOLD) {
+            int interval = Math.max(1, BariumConfig.C.GUI_FRAME_SKIP_INTERVAL);
+            frameSkipCursor = (frameSkipCursor + 1) % (interval + 1);
+            if (frameSkipCursor != 0) {
+                return true;
+            }
+        }
+
         return false;
     }
 
