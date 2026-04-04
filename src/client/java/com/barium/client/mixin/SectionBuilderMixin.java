@@ -1,7 +1,6 @@
 package com.barium.client.mixin;
 
 import com.barium.config.BariumConfig;
-import com.barium.client.render.instancing.InstancedChunkRenderer;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
 import net.minecraft.block.Block;
@@ -13,7 +12,6 @@ import net.minecraft.client.render.chunk.SectionBuilder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.profiler.Profilers;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -125,20 +123,6 @@ public class SectionBuilderMixin {
                         if (BariumConfig.C.ENABLE_DISTANT_GEOMETRY_CULLING && this.barium_isDistant) {
                             if (isDetailBlock(state.getBlock())) {
                                 continue; // Ignora este bloco, trata como ar
-                            }
-                        }
-
-                        if (BariumConfig.C.ENABLE_INSTANCED_RENDERING && BariumConfig.C.ENABLE_VERTEX_POOLING) {
-                            MinecraftClient client = MinecraftClient.getInstance();
-                            if (client != null) {
-                                Profilers.get().push("barium_instancing_collect");
-                            }
-                            try {
-                                InstancedChunkRenderer.getInstance().recordVisibleFaces(region, mutablePos, state, 0, 0);
-                            } finally {
-                                if (client != null) {
-                                    Profilers.get().pop();
-                                }
                             }
                         }
 
