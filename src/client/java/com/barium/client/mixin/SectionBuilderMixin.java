@@ -1,8 +1,6 @@
 package com.barium.client.mixin;
 
 import com.barium.config.BariumConfig;
-import com.barium.client.util.ChunkRenderManager;
-import com.barium.client.util.ChunkVisibilityManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -78,28 +76,10 @@ public class SectionBuilderMixin {
     // Mantém a otimização de seções vazias que já fizemos
     @Inject(method = "build", at = @At("HEAD"), cancellable = true)
     private void barium$cullEmptySections(ChunkSectionPos sectionPos, ChunkRendererRegion renderRegion, VertexSorter vertexSorter, net.minecraft.client.render.chunk.BlockBufferAllocatorStorage allocatorStorage, CallbackInfoReturnable<SectionBuilder.RenderData> cir) {
-        boolean predictedVisible = false;
-
-        if (BariumConfig.C.ENABLE_PER_SECTION_FRUSTUM_CULLING) {
-            boolean inFrustum = ChunkRenderManager.getInstance().isSectionInFrustum(sectionPos.getSectionX(), sectionPos.getSectionY(), sectionPos.getSectionZ());
-            if (!inFrustum) {
-                predictedVisible = ChunkRenderManager.getInstance().isSectionPredictedVisible(sectionPos.getSectionX(), sectionPos.getSectionY(), sectionPos.getSectionZ());
-                if (!predictedVisible) {
-                    cir.setReturnValue(new SectionBuilder.RenderData());
-                    return;
-                }
-            }
-        }
-
-        if (BariumConfig.C.ENABLE_VISIBILITY_GRAPH_CULLING && !predictedVisible) {
-            if (!ChunkVisibilityManager.getInstance().isSectionPotentiallyVisible(sectionPos.getSectionX(), sectionPos.getSectionY(), sectionPos.getSectionZ())) {
-                cir.setReturnValue(new SectionBuilder.RenderData());
-                return;
-            }
-        }
-
+        // Segurança (Yarn 1.21.9): nunca transformar "estado de visibilidade temporário"
+        // em malha vazia no build. Aqui só podemos cancelar se realmente estiver vazio.
         if (!BariumConfig.C.ENABLE_EMPTY_CHUNK_SECTION_CULLING) return;
-        if (renderRegion == null || isSectionEmpty(renderRegion, sectionPos)) {
+        if (renderRegion != null && isSectionEmpty(renderRegion, sectionPos)) {
             cir.setReturnValue(new SectionBuilder.RenderData());
         }
     }
