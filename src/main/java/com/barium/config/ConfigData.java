@@ -85,6 +85,7 @@ public class ConfigData {
     public boolean ENABLE_HAND_RENDER_THROTTLING = false;
     public int HAND_RENDER_SKIP_FRAMES = 1;
     public boolean ENABLE_Z_PREPASS = false;
+    public boolean ENABLE_VERTEX_CULLING = true;
 
     // ================== Game Logic & Tick Optimizations ================== //
     public boolean ENABLE_ENTITY_TICK_CULLING = true;

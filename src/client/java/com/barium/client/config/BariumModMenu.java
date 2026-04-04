@@ -107,6 +107,8 @@ public class BariumModMenu implements ModMenuApi {
                     .setDefaultValue(defaults.HAND_RENDER_SKIP_FRAMES).setTooltip(Text.translatable("tooltip.barium.hand_render_skip_frames")).setSaveConsumer(v -> BariumConfig.C.HAND_RENDER_SKIP_FRAMES = v).build());
             mainCategory.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.barium.enable_z_prepass"), BariumConfig.C.ENABLE_Z_PREPASS)
                     .setDefaultValue(defaults.ENABLE_Z_PREPASS).setTooltip(Text.translatable("tooltip.barium.enable_z_prepass")).setSaveConsumer(v -> BariumConfig.C.ENABLE_Z_PREPASS = v).build());
+            mainCategory.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.barium.enable_vertex_culling"), BariumConfig.C.ENABLE_VERTEX_CULLING)
+                    .setDefaultValue(defaults.ENABLE_VERTEX_CULLING).setTooltip(Text.translatable("tooltip.barium.enable_vertex_culling")).setSaveConsumer(v -> BariumConfig.C.ENABLE_VERTEX_CULLING = v).build());
             mainCategory.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.barium.cache_debug_hud"), BariumConfig.C.CACHE_DEBUG_HUD)
                     .setDefaultValue(defaults.CACHE_DEBUG_HUD).setTooltip(Text.translatable("tooltip.barium.cache_debug_hud")).setSaveConsumer(v -> BariumConfig.C.CACHE_DEBUG_HUD = v).build());
             mainCategory.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.barium.enable_tooltip_caching"), BariumConfig.C.ENABLE_TOOLTIP_CACHING)

@@ -15,6 +15,7 @@ Barium now includes an optional Z-prepass hook for **custom opaque geometry** re
 ### Enable in config
 In Mod Menu → Barium settings, enable:
 - `Enable Z-Prepass for Custom Opaque Geometry`
+- `Enable Vertex/Backface Culling` (optional)
 
 ### Register your opaque renderer
 ```java
@@ -24,10 +25,10 @@ ZPrepassRenderer.registerOpaqueRenderer(() -> {
 });
 ```
 
-Then, inside your custom world render hook, call:
-```java
-ZPrepassRenderer.runPrepassForRegisteredRenderers();
-```
+Register your renderer once, and Barium runs it from the world render tail when Z-prepass is enabled.
+
+Spark/profiler visibility:
+- The pass is wrapped in the profiler section `barium_z_prepass`, so it appears in performance traces when active.
 
 Barium executes:
 1. **Depth pass** (color writes disabled, depth writes enabled)

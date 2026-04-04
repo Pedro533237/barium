@@ -100,6 +100,9 @@
   "option.barium.enable_z_prepass": "Ativar Z-Prepass para Geometria Opaca Custom",
   "tooltip.barium.enable_z_prepass": "Executa um passe só de profundidade antes do passe de cor para renderizadores opacos custom do Barium. Só compensa com shader pesado; reduz overdraw, mas desenha a geometria 2x.",
 
+  "option.barium.enable_vertex_culling": "Ativar Vertex/Backface Culling",
+  "tooltip.barium.enable_vertex_culling": "Ativa culling de faces traseiras durante o Z-prepass custom do Barium para reduzir carga de vértices e fragmentos em faces ocultas.",
+
   "option.barium.enable_entity_tick_culling": "Otimização de Ticks de Entidades",
   "tooltip.barium.enable_entity_tick_culling": "Reduz a frequência de atualização da lógica (IA) de entidades distantes.",
 
