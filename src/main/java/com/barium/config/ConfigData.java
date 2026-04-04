@@ -96,8 +96,8 @@ public class ConfigData {
     public boolean ENABLE_BACKGROUND_EVENT_THROTTLING = true;
 
     // ================== Advanced Rendering Pipeline ================== //
-    public boolean ENABLE_FACE_CULLING_BETWEEN_BLOCKS = false;
-    public boolean ENABLE_Z_PREPASS = false;
+    public boolean ENABLE_FACE_CULLING_BETWEEN_BLOCKS = true;
+    public boolean ENABLE_Z_PREPASS = true;
     public boolean ENABLE_VERTEX_POOLING = true;
     public boolean ENABLE_INSTANCED_RENDERING = false;
     public boolean ENABLE_RENDER_DEBUG_METRICS = true;

@@ -25,7 +25,13 @@ public class BlockRenderManagerMixin {
 
     @Inject(method = "renderBlock", at = @At("HEAD"), cancellable = true)
     private void barium$optimizedFoliageCulling(BlockState state, BlockPos pos, BlockRenderView world, MatrixStack matrices, VertexConsumer vertexConsumer, boolean cull, List<?> parts, CallbackInfo ci) {
+        int lx = pos.getX() & 15;
+        int ly = pos.getY() & 15;
+        int lz = pos.getZ() & 15;
+        boolean isInteriorBlock = lx > 0 && lx < 15 && ly > 0 && ly < 15 && lz > 0 && lz < 15;
+
         if (BariumConfig.C.ENABLE_FACE_CULLING_BETWEEN_BLOCKS && cull
+                && isInteriorBlock
                 && world instanceof net.minecraft.client.render.chunk.ChunkRendererRegion
                 && !state.hasBlockEntity()
                 && state.isOpaqueFullCube()) {
