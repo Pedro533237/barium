@@ -3,6 +3,7 @@ package com.barium.client.mixin;
 import com.barium.client.chunk.ClientChunkManager;
 import com.barium.client.optimization.EntityOutlineOptimizer;
 import com.barium.client.optimization.ChunkUploadThrottler;
+import com.barium.client.render.pipeline.WorldRenderPipelineManager;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
 import com.barium.client.util.FloodFillVisibilityManager;
@@ -45,6 +46,12 @@ public abstract class WorldRendererMixin {
      * Isso nos permite saber, com CUSTO ZERO (pois o jogo já faz essa verificação),
      * se existe algo brilhando na tela.
      */
+
+    @Inject(method = "render", at = @At("TAIL"), require = 0)
+    private void barium$runZPrepass(CallbackInfo ci) {
+        WorldRenderPipelineManager.runTailPipelines();
+    }
+
     @Redirect(
         method = "fillEntityOutlineRenderStates",
         at = @At(
