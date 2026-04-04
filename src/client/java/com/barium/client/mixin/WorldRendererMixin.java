@@ -4,6 +4,7 @@ import com.barium.client.chunk.ClientChunkManager;
 import com.barium.client.optimization.EntityOutlineOptimizer;
 import com.barium.client.optimization.ChunkUploadThrottler;
 import com.barium.client.optimization.ZPrepassRenderer;
+import com.barium.client.optimization.VertexPullingManager;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
 import com.barium.client.util.FloodFillVisibilityManager;
@@ -50,13 +51,17 @@ public abstract class WorldRendererMixin {
 
     @Inject(method = "render", at = @At("TAIL"), require = 0)
     private void barium$runZPrepass(CallbackInfo ci) {
-        if (!BariumConfig.C.ENABLE_Z_PREPASS) {
-            return;
+        if (BariumConfig.C.ENABLE_Z_PREPASS) {
+            Profilers.get().push("barium_z_prepass");
+            ZPrepassRenderer.runPrepassForRegisteredRenderers();
+            Profilers.get().pop();
         }
 
-        Profilers.get().push("barium_z_prepass");
-        ZPrepassRenderer.runPrepassForRegisteredRenderers();
-        Profilers.get().pop();
+        if (BariumConfig.C.ENABLE_VERTEX_PULLING) {
+            Profilers.get().push("barium_vertex_pulling");
+            VertexPullingManager.run();
+            Profilers.get().pop();
+        }
     }
 
     @Redirect(
