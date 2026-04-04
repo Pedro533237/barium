@@ -2,25 +2,22 @@ package com.barium.client.optimization;
 
 import com.barium.BariumMod;
 import com.barium.config.BariumConfig;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Pipeline simples de Z-Prepass para geometrias opacas registradas pelo mod.
- * <p>
- * Importante: este pipeline NÃO tenta substituir o renderer vanilla/Sodium.
- * Ele só executa para renderizadores customizados que registrarem callbacks aqui.
+ * Utilitário de Z-prepass para renderizadores opacos custom.
+ *
+ * Não depende de Fabric WorldRenderEvents: o renderer custom chama
+ * runPrepassForRegisteredRenderers() no momento apropriado do pipeline.
  */
 public final class ZPrepassRenderer {
 
     @FunctionalInterface
     public interface OpaqueGeometryRenderer {
-        void render(WorldRenderContext context);
+        void render();
     }
 
     private static final List<OpaqueGeometryRenderer> OPAQUE_RENDERERS = new CopyOnWriteArrayList<>();
@@ -29,7 +26,7 @@ public final class ZPrepassRenderer {
     }
 
     public static void initialize() {
-        WorldRenderEvents.AFTER_ENTITIES.register(ZPrepassRenderer::renderTwoPassOpaqueGeometry);
+        BariumMod.LOGGER.info("ZPrepassRenderer ready. Waiting for custom opaque renderers registration.");
     }
 
     public static void registerOpaqueRenderer(OpaqueGeometryRenderer renderer) {
@@ -40,48 +37,46 @@ public final class ZPrepassRenderer {
         OPAQUE_RENDERERS.remove(renderer);
     }
 
-    private static void renderTwoPassOpaqueGeometry(WorldRenderContext context) {
+    public static void runPrepassForRegisteredRenderers() {
         if (!BariumConfig.C.ENABLE_Z_PREPASS || OPAQUE_RENDERERS.isEmpty()) {
             return;
         }
 
-        runDepthOnlyPass(context);
-        runMainColorPass(context);
+        beginDepthPrepass();
+        renderRegisteredGeometry();
+
+        beginMainColorPass();
+        renderRegisteredGeometry();
+
         restoreDefaultState();
     }
 
-    private static void runDepthOnlyPass(WorldRenderContext context) {
-        RenderSystem.enableDepthTest();
-        RenderSystem.depthFunc(GL11.GL_LESS);
-        RenderSystem.colorMask(false, false, false, false);
-        RenderSystem.depthMask(true);
-
-        for (OpaqueGeometryRenderer renderer : OPAQUE_RENDERERS) {
-            try {
-                renderer.render(context);
-            } catch (Throwable throwable) {
-                BariumMod.LOGGER.error("Erro durante depth prepass de geometria opaca", throwable);
-            }
-        }
+    public static void beginDepthPrepass() {
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glDepthFunc(GL11.GL_LESS);
+        GL11.glColorMask(false, false, false, false);
+        GL11.glDepthMask(true);
     }
 
-    private static void runMainColorPass(WorldRenderContext context) {
-        RenderSystem.colorMask(true, true, true, true);
-        RenderSystem.depthMask(false);
-        RenderSystem.depthFunc(GL11.GL_LEQUAL);
-
-        for (OpaqueGeometryRenderer renderer : OPAQUE_RENDERERS) {
-            try {
-                renderer.render(context);
-            } catch (Throwable throwable) {
-                BariumMod.LOGGER.error("Erro durante render principal de geometria opaca", throwable);
-            }
-        }
+    public static void beginMainColorPass() {
+        GL11.glColorMask(true, true, true, true);
+        GL11.glDepthMask(false);
+        GL11.glDepthFunc(GL11.GL_LEQUAL);
     }
 
-    private static void restoreDefaultState() {
-        RenderSystem.colorMask(true, true, true, true);
-        RenderSystem.depthMask(true);
-        RenderSystem.depthFunc(GL11.GL_LEQUAL);
+    public static void restoreDefaultState() {
+        GL11.glColorMask(true, true, true, true);
+        GL11.glDepthMask(true);
+        GL11.glDepthFunc(GL11.GL_LEQUAL);
+    }
+
+    private static void renderRegisteredGeometry() {
+        for (OpaqueGeometryRenderer renderer : OPAQUE_RENDERERS) {
+            try {
+                renderer.render();
+            } catch (Throwable throwable) {
+                BariumMod.LOGGER.error("Erro durante execução do Z-prepass", throwable);
+            }
+        }
     }
 }

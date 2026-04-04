@@ -18,10 +18,15 @@ In Mod Menu → Barium settings, enable:
 
 ### Register your opaque renderer
 ```java
-ZPrepassRenderer.registerOpaqueRenderer(context -> {
+ZPrepassRenderer.registerOpaqueRenderer(() -> {
     // Draw only opaque custom geometry here.
     // Keep vertex transform exactly the same between the two passes.
 });
+```
+
+Then, inside your custom world render hook, call:
+```java
+ZPrepassRenderer.runPrepassForRegisteredRenderers();
 ```
 
 Barium executes:
