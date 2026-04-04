@@ -7,6 +7,7 @@ public class ConfigData {
 
     // ================== Chunk Performance ================== //
     public boolean ENABLE_FRUSTUM_CHUNK_CULLING = true;
+    public boolean ENABLE_AGGRESSIVE_CHUNK_BUILD_CULLING = false;
     public boolean ENABLE_FLOOD_FILL_CULLING = true;
     public boolean ENABLE_OCCLUSION_CULLING = true;
     public boolean ENABLE_VISIBILITY_GRAPH_CULLING = true;

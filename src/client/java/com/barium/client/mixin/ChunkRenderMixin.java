@@ -25,6 +25,10 @@ public abstract class ChunkRenderMixin {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return;
 
+        if (!BariumConfig.C.ENABLE_AGGRESSIVE_CHUNK_BUILD_CULLING) {
+            return;
+        }
+
         BlockPos origin = this.getOrigin();
         int chunkX = origin.getX() >> 4;
         int chunkZ = origin.getZ() >> 4;
