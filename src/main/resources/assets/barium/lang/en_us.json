@@ -109,6 +109,9 @@
   "option.barium.hand_render_skip_frames": "Hand Render Skip Frames",
   "tooltip.barium.hand_render_skip_frames": "How many hand frames to skip between renders. 1 = light, 3 = aggressive.",
 
+  "option.barium.enable_z_prepass": "Enable Z-Prepass for Custom Opaque Geometry",
+  "tooltip.barium.enable_z_prepass": "Runs a depth-only pass before the color pass for Barium custom opaque renderers. Useful only when your custom shader is heavy; can reduce overdraw, but draws geometry twice.",
+
   "option.barium.enable_entity_tick_culling": "Enable Entity Tick Culling",
   "tooltip.barium.enable_entity_tick_culling": "Reduces the update frequency of distant entities' logic (AI).",
   "option.barium.entity_tick_distance": "Entity Tick Distance",

@@ -97,6 +97,9 @@
   "option.barium.hand_render_skip_frames": "Frames Pulados da Mão",
   "tooltip.barium.hand_render_skip_frames": "Define quantos frames da mão serão pulados entre renders. 1 = leve, 3 = agressivo.",
   
+  "option.barium.enable_z_prepass": "Ativar Z-Prepass para Geometria Opaca Custom",
+  "tooltip.barium.enable_z_prepass": "Executa um passe só de profundidade antes do passe de cor para renderizadores opacos custom do Barium. Só compensa com shader pesado; reduz overdraw, mas desenha a geometria 2x.",
+
   "option.barium.enable_entity_tick_culling": "Otimização de Ticks de Entidades",
   "tooltip.barium.enable_entity_tick_culling": "Reduz a frequência de atualização da lógica (IA) de entidades distantes.",
 
