@@ -3,6 +3,7 @@ package com.barium.client.mixin;
 import com.barium.client.chunk.ClientChunkManager;
 import com.barium.client.optimization.EntityOutlineOptimizer;
 import com.barium.client.optimization.ChunkUploadThrottler;
+import com.barium.client.render.pipeline.RenderPipelineManager;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
 import com.barium.client.util.FloodFillVisibilityManager;
@@ -37,6 +38,8 @@ public abstract class WorldRendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void barium$resetFrameState(CallbackInfo ci) {
         EntityOutlineOptimizer.reset();
+        RenderPipelineManager.beginFrame();
+        RenderPipelineManager.beginDepthPrepassIfEnabled();
     }
 
     /**
@@ -112,4 +115,9 @@ public abstract class WorldRendererMixin {
         }
         ChunkUploadThrottler.resetCounter();
     }
+    @Inject(method = "render", at = @At("TAIL"))
+    private void barium$restorePipelineState(CallbackInfo ci) {
+        RenderPipelineManager.endDepthPrepassIfEnabled();
+    }
+
 }

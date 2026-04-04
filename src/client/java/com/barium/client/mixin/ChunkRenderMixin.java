@@ -2,6 +2,7 @@ package com.barium.client.mixin;
 
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.FloodFillVisibilityManager;
+import com.barium.client.render.pipeline.RenderDebugMetrics;
 import com.barium.config.BariumConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.chunk.ChunkBuilder;
@@ -72,6 +73,9 @@ public abstract class ChunkRenderMixin {
                 }
 
                 // Caso contrário, bloqueamos a construção por agora (mantendo o último estado renderizado)
+                if (BariumConfig.C.ENABLE_RENDER_DEBUG_METRICS) {
+                    RenderDebugMetrics.addCulledChunk();
+                }
                 cir.setReturnValue(false);
                 return;
             }
@@ -106,6 +110,9 @@ public abstract class ChunkRenderMixin {
                     return;
                 }
 
+                if (BariumConfig.C.ENABLE_RENDER_DEBUG_METRICS) {
+                    RenderDebugMetrics.addCulledChunk();
+                }
                 cir.setReturnValue(false);
                 return;
             }

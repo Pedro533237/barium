@@ -1,6 +1,7 @@
 package com.barium.client.mixin;
 
 import com.barium.client.optimization.HudOptimizer;
+import com.barium.client.render.pipeline.RenderDebugMetrics;
 import com.barium.config.BariumConfig;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.util.Formatting;
@@ -48,6 +49,14 @@ public abstract class DebugHudMixin {
         originalList.add(formatOption("Entity Culling", BariumConfig.C.ENABLE_ENTITY_CULLING));
         originalList.add(formatOption("Block Entity Culling", BariumConfig.C.ENABLE_BLOCK_ENTITY_OCCLUSION_CULLING));
         originalList.add(formatOption("Particle Culling", BariumConfig.C.ENABLE_PARTICLE_OPTIMIZATION));
+        originalList.add(formatOption("Face Culling", BariumConfig.C.ENABLE_FACE_CULLING_BETWEEN_BLOCKS));
+        originalList.add(formatOption("Z-Prepass", BariumConfig.C.ENABLE_Z_PREPASS));
+        originalList.add(formatOption("Instancing", BariumConfig.C.ENABLE_INSTANCED_RENDERING));
+
+        if (BariumConfig.C.ENABLE_RENDER_DEBUG_METRICS) {
+            originalList.add(Formatting.DARK_GRAY + " > " + Formatting.WHITE + "Faces Culled: " + Formatting.YELLOW + RenderDebugMetrics.getCulledFaces());
+            originalList.add(Formatting.DARK_GRAY + " > " + Formatting.WHITE + "Chunks Culled: " + Formatting.YELLOW + RenderDebugMetrics.getCulledChunks());
+        }
 
         // ETAPA 2: ATUALIZAR O CACHE COM A LISTA JÁ MODIFICADA
         if (BariumConfig.C.CACHE_DEBUG_HUD) {
