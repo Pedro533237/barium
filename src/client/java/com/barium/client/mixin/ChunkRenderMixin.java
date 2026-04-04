@@ -42,6 +42,8 @@ public abstract class ChunkRenderMixin {
 
         // 1. Flood Fill (Graph Culling) - Melhorado para evitar bugs de carregamento lento
         if (BariumConfig.C.ENABLE_FLOOD_FILL_CULLING) {
+            client.getProfiler().push("barium_flood_fill_chunk_culling");
+            try {
             // Verifica se o chunk está marcado como visível no grafo
             if (!FloodFillVisibilityManager.getInstance().isChunkVisible(chunkX, chunkZ)) {
                 // Em vez de bloquear totalmente, usamos uma estratégia de atualização esparsa
@@ -79,12 +81,17 @@ public abstract class ChunkRenderMixin {
                 cir.setReturnValue(false);
                 return;
             }
+            } finally {
+                client.getProfiler().pop();
+            }
         }
 
 
         // 2. Frustum Culling (Campo de Visão)
         if (BariumConfig.C.ENABLE_FRUSTUM_CHUNK_CULLING) {
-            if (!ChunkRenderManager.getInstance().isChunkInFrustum(chunkX, chunkZ)) {
+            client.getProfiler().push("barium_frustum_chunk_culling");
+            try {
+                if (!ChunkRenderManager.getInstance().isChunkInFrustum(chunkX, chunkZ)) {
                 // Aplica lógica similar ao FloodFill: não bloqueia totalmente, apenas degrada atualização
                 int playerX = pX;
                 int playerZ = pZ;
@@ -115,6 +122,9 @@ public abstract class ChunkRenderMixin {
                 }
                 cir.setReturnValue(false);
                 return;
+                }
+            } finally {
+                client.getProfiler().pop();
             }
         }
     }

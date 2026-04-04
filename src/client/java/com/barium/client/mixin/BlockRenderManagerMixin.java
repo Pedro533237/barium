@@ -24,12 +24,24 @@ public class BlockRenderManagerMixin {
 
     @Inject(method = "renderBlock", at = @At("HEAD"), cancellable = true)
     private void barium$optimizedFoliageCulling(BlockState state, BlockPos pos, BlockRenderView world, MatrixStack matrices, VertexConsumer vertexConsumer, boolean cull, List<?> parts, CallbackInfo ci) {
-        if (BariumConfig.C.ENABLE_FACE_CULLING_BETWEEN_BLOCKS && FaceCullingManager.isFullyOccluded(world, pos, state)) {
-            if (BariumConfig.C.ENABLE_RENDER_DEBUG_METRICS) {
-                RenderDebugMetrics.addCulledFace();
+        if (BariumConfig.C.ENABLE_FACE_CULLING_BETWEEN_BLOCKS) {
+            MinecraftClient client = MinecraftClient.getInstance();
+            if (client != null) {
+                client.getProfiler().push("barium_face_culling");
             }
-            ci.cancel();
-            return;
+            try {
+                if (FaceCullingManager.isFullyOccluded(world, pos, state)) {
+                    if (BariumConfig.C.ENABLE_RENDER_DEBUG_METRICS) {
+                        RenderDebugMetrics.addCulledFace();
+                    }
+                    ci.cancel();
+                    return;
+                }
+            } finally {
+                if (client != null) {
+                    client.getProfiler().pop();
+                }
+            }
         }
 
         int level = BariumConfig.C.DENSE_FOLIAGE_CULLING_LEVEL;

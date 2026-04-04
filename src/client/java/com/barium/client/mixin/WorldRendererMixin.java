@@ -39,7 +39,12 @@ public abstract class WorldRendererMixin {
     private void barium$resetFrameState(CallbackInfo ci) {
         EntityOutlineOptimizer.reset();
         RenderPipelineManager.beginFrame();
-        RenderPipelineManager.beginDepthPrepassIfEnabled();
+        this.client.getProfiler().push("barium_z_prepass_stage");
+        try {
+            RenderPipelineManager.beginDepthPrepassIfEnabled();
+        } finally {
+            this.client.getProfiler().pop();
+        }
     }
 
     /**
@@ -117,7 +122,12 @@ public abstract class WorldRendererMixin {
     }
     @Inject(method = "render", at = @At("TAIL"))
     private void barium$restorePipelineState(CallbackInfo ci) {
-        RenderPipelineManager.endDepthPrepassIfEnabled();
+        this.client.getProfiler().push("barium_z_prepass_stage");
+        try {
+            RenderPipelineManager.endDepthPrepassIfEnabled();
+        } finally {
+            this.client.getProfiler().pop();
+        }
     }
 
 }

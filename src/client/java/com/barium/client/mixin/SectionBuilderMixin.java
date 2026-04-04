@@ -1,6 +1,7 @@
 package com.barium.client.mixin;
 
 import com.barium.config.BariumConfig;
+import com.barium.client.render.instancing.InstancedChunkRenderer;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
 import net.minecraft.block.Block;
@@ -125,6 +126,21 @@ public class SectionBuilderMixin {
                                 continue; // Ignora este bloco, trata como ar
                             }
                         }
+
+                        if (BariumConfig.C.ENABLE_INSTANCED_RENDERING && BariumConfig.C.ENABLE_VERTEX_POOLING) {
+                            MinecraftClient client = MinecraftClient.getInstance();
+                            if (client != null) {
+                                client.getProfiler().push("barium_instancing_collect");
+                            }
+                            try {
+                                InstancedChunkRenderer.getInstance().recordVisibleFaces(region, mutablePos, state, 0, 0);
+                            } finally {
+                                if (client != null) {
+                                    client.getProfiler().pop();
+                                }
+                            }
+                        }
+
                         return false; // É um bloco sólido ou importante, renderiza a seção.
                     }
                 }
