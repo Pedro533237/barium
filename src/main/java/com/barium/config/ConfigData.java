@@ -81,6 +81,9 @@ public class ConfigData {
     public boolean DISABLE_TRANSLUCENT_RENDERING = false;
     public boolean DISABLE_TEXTURE_ANIMATIONS = false;
     public boolean ENABLE_GUI_OPTIMIZATION = true;
+    public boolean ENABLE_ADAPTIVE_GUI_FRAME_SKIP = false;
+    public int GUI_FRAME_SKIP_INTERVAL = 1;
+    public int GUI_FRAME_SKIP_FPS_THRESHOLD = 45;
     public int MIPMAP_LEVEL_OVERRIDE = 0;
     public boolean ENABLE_HAND_RENDER_THROTTLING = false;
     public int HAND_RENDER_SKIP_FRAMES = 1;
