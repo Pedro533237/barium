@@ -20,11 +20,11 @@ public class BariumClient implements ClientModInitializer {
 
     private static BariumClient instance;
 
-    // CORREÇÃO: O ChunkRenderManager foi adicionado de volta
     private final ChunkRenderManager chunkRenderManager = ChunkRenderManager.getInstance();
 
     public static final ExecutorService RENDER_THREAD_POOL = Executors.newSingleThreadExecutor(new ThreadFactory() {
         private final AtomicInteger threadId = new AtomicInteger(0);
+
         @Override
         public Thread newThread(Runnable r) {
             Thread t = new Thread(r, "Barium Render Thread #" + threadId.incrementAndGet());
@@ -42,7 +42,6 @@ public class BariumClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.world == null) {
                 ChunkVisibilityManager.getInstance().clear();
-                // CORREÇÃO: A chamada ao método clear() agora funcionará.
                 this.chunkRenderManager.clear();
                 ClientChunkManager.getInstance().clear();
                 ParticleOptimizer.resetParticleCount();
@@ -52,7 +51,7 @@ public class BariumClient implements ClientModInitializer {
         BariumMod.LOGGER.info("Barium Client Initialized.");
     }
 
-    private static int currentFps = 60; // default
+    private static int currentFps = 60;
     private static long lastFpsUpdate = 0;
     private static int frameCount = 0;
 
@@ -67,7 +66,7 @@ public class BariumClient implements ClientModInitializer {
     public static void updateFps() {
         frameCount++;
         long now = System.currentTimeMillis();
-        if (now - lastFpsUpdate >= 1000) { // update every second
+        if (now - lastFpsUpdate >= 1000) {
             currentFps = frameCount;
             frameCount = 0;
             lastFpsUpdate = now;
