@@ -11,6 +11,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -65,7 +66,7 @@ public class BariumClient implements ClientModInitializer {
             int x = screen.width / 2 - 155;
             int y = screen.height - 27;
 
-            ScreenEvents.getButtons(screen).add(ButtonWidget.builder(Text.translatable("title.barium.config"), button ->
+            Screens.getButtons(screen).add(ButtonWidget.builder(Text.translatable("title.barium.config"), button ->
                             client.setScreen(BariumConfigScreen.create(screen)))
                     .dimensions(x, y, buttonWidth, buttonHeight)
                     .build());
