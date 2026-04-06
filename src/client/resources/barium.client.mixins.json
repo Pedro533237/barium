@@ -18,6 +18,7 @@
 		"HandRenderMixin",
 		"GuiRendererMixin",
 		"InGameHudMixin",
+		"OptionsScreenMixin",
 		"ItemStackMixin",
 		"DrawContextMixin",
 		"HandledScreenMixin",

@@ -39,10 +39,6 @@ repositories {
         name = 'ClothConfig'
         url = 'https://maven.shedaniel.me/'
     }
-    maven {
-        name = 'ModMenu'
-        url = 'https://maven.terraformersmc.com/releases/'
-    }
 }
 
 dependencies {
@@ -52,9 +48,6 @@ dependencies {
 
     //Fabric api
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    //Mod Menu
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
     //Cloth Config
     modImplementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
