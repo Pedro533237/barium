@@ -2,6 +2,7 @@ package com.barium.client;
 
 import com.barium.BariumMod;
 import com.barium.client.chunk.ClientChunkManager;
+import com.barium.client.config.BariumConfigScreen;
 import com.barium.client.optimization.ParticleOptimizer;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
@@ -9,7 +10,13 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.text.Text;
 
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -48,7 +55,37 @@ public class BariumClient implements ClientModInitializer {
             }
         });
 
+        ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+            if (!isGraphicsOptionsScreen(screen)) {
+                return;
+            }
+
+            int buttonWidth = 150;
+            int buttonHeight = 20;
+            int x = screen.width / 2 - 155;
+            int y = screen.height - 27;
+
+            ScreenEvents.getButtons(screen).add(ButtonWidget.builder(Text.translatable("title.barium.config"), button ->
+                            client.setScreen(BariumConfigScreen.create(screen)))
+                    .dimensions(x, y, buttonWidth, buttonHeight)
+                    .build());
+        });
+
         BariumMod.LOGGER.info("Barium Client Initialized.");
+    }
+
+    private static boolean isGraphicsOptionsScreen(Screen screen) {
+        if (screen instanceof VideoOptionsScreen) {
+            return true;
+        }
+
+        String className = screen.getClass().getName().toLowerCase(Locale.ROOT);
+
+        boolean isSodiumScreen = className.contains("sodium") && className.contains("screen");
+        boolean isVulkanModScreen = className.contains("vulkanmod") && className.contains("screen");
+        boolean isVideoOrGraphics = className.contains("video") || className.contains("graphics") || className.contains("option");
+
+        return (isSodiumScreen || isVulkanModScreen) && isVideoOrGraphics;
     }
 
     private static int currentFps = 60;
