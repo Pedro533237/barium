@@ -1,7 +1,7 @@
 // build.gradle (FINAL CORRECTED VERSION)
 
 plugins {
-	id 'fabric-loom' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
@@ -35,6 +35,7 @@ loom {
 }
 
 repositories {
+    mavenCentral()
     maven {
         name = 'ClothConfig'
         url = 'https://maven.shedaniel.me/'
