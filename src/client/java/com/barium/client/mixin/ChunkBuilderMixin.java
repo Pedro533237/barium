@@ -1,7 +1,7 @@
 package com.barium.client.mixin;
 
 import com.barium.client.optimization.ChunkUploadThrottler;
-import net.minecraft.client.render.chunk.ChunkBuilder;
+import net.minecraft.client.renderer.chunk.SectionRenderDispatcher;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
