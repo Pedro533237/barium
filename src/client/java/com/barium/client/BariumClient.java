@@ -2,6 +2,7 @@ package com.barium.client;
 
 import com.barium.BariumMod;
 import com.barium.client.chunk.ClientChunkManager;
+import com.barium.client.config.BariumConfigScreen;
 import com.barium.client.optimization.ParticleOptimizer;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
@@ -9,7 +10,14 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.text.Text;
 
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -20,11 +28,11 @@ public class BariumClient implements ClientModInitializer {
 
     private static BariumClient instance;
 
-    // CORREÇÃO: O ChunkRenderManager foi adicionado de volta
     private final ChunkRenderManager chunkRenderManager = ChunkRenderManager.getInstance();
 
     public static final ExecutorService RENDER_THREAD_POOL = Executors.newSingleThreadExecutor(new ThreadFactory() {
         private final AtomicInteger threadId = new AtomicInteger(0);
+
         @Override
         public Thread newThread(Runnable r) {
             Thread t = new Thread(r, "Barium Render Thread #" + threadId.incrementAndGet());
@@ -42,17 +50,46 @@ public class BariumClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.world == null) {
                 ChunkVisibilityManager.getInstance().clear();
-                // CORREÇÃO: A chamada ao método clear() agora funcionará.
                 this.chunkRenderManager.clear();
                 ClientChunkManager.getInstance().clear();
                 ParticleOptimizer.resetParticleCount();
             }
         });
 
+        ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+            if (!isGraphicsOptionsScreen(screen)) {
+                return;
+            }
+
+            int buttonWidth = 150;
+            int buttonHeight = 20;
+            int x = screen.width / 2 - 155;
+            int y = screen.height - 27;
+
+            Screens.getButtons(screen).add(ButtonWidget.builder(Text.translatable("title.barium.config"), button ->
+                            client.setScreen(BariumConfigScreen.create(screen)))
+                    .dimensions(x, y, buttonWidth, buttonHeight)
+                    .build());
+        });
+
         BariumMod.LOGGER.info("Barium Client Initialized.");
     }
 
-    private static int currentFps = 60; // default
+    private static boolean isGraphicsOptionsScreen(Screen screen) {
+        if (screen instanceof VideoOptionsScreen) {
+            return true;
+        }
+
+        String className = screen.getClass().getName().toLowerCase(Locale.ROOT);
+
+        boolean isSodiumScreen = className.contains("sodium") && className.contains("screen");
+        boolean isVulkanModScreen = className.contains("vulkanmod") && className.contains("screen");
+        boolean isVideoOrGraphics = className.contains("video") || className.contains("graphics") || className.contains("option");
+
+        return (isSodiumScreen || isVulkanModScreen) && isVideoOrGraphics;
+    }
+
+    private static int currentFps = 60;
     private static long lastFpsUpdate = 0;
     private static int frameCount = 0;
 
@@ -67,7 +104,7 @@ public class BariumClient implements ClientModInitializer {
     public static void updateFps() {
         frameCount++;
         long now = System.currentTimeMillis();
-        if (now - lastFpsUpdate >= 1000) { // update every second
+        if (now - lastFpsUpdate >= 1000) {
             currentFps = frameCount;
             frameCount = 0;
             lastFpsUpdate = now;
