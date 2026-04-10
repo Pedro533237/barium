@@ -4,7 +4,7 @@ import com.barium.config.BariumConfig;
 import it.unimi.dsi.fastutil.longs.Long2BooleanOpenHashMap;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Frustum;
+import net.minecraft.client.renderer.Frustum;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;

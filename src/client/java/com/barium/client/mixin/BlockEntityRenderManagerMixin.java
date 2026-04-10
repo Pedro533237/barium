@@ -4,10 +4,10 @@ import com.barium.client.optimization.ChunkOptimizer;
 import com.barium.config.BariumConfig;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.block.entity.BlockEntityRenderManager;
-import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
-import net.minecraft.client.render.command.ModelCommandRenderer;
+import net.minecraft.client.renderer.Camera;
+import net.minecraft.client.renderer.block.entity.BlockEntityRenderManager;
+import net.minecraft.client.renderer.block.entity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.command.ModelCommandRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,7 +22,7 @@ public abstract class BlockEntityRenderManagerMixin {
      * A assinatura do método agora usa tipos explícitos para garantir a compatibilidade e robustez do Mixin.
      */
     @Inject(
-        method = "getRenderState(Lnet/minecraft/block/entity/BlockEntity;FLnet/minecraft/client/render/command/ModelCommandRenderer$CrumblingOverlayCommand;)Lnet/minecraft/client/render/block/entity/state/BlockEntityRenderState;",
+        method = "getRenderState(Lnet/minecraft/block/entity/BlockEntity;FLnet/minecraft/client/renderer/command/ModelCommandRenderer$CrumblingOverlayCommand;)Lnet/minecraft/client/renderer/block/entity/state/BlockEntityRenderState;",
         at = @At("HEAD"),
         cancellable = true
     )

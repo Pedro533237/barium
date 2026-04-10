@@ -2,7 +2,7 @@ package com.barium.client.optimization;
 
 import com.barium.config.BariumConfig;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.multiplayer.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import org.lwjgl.glfw.GLFW;

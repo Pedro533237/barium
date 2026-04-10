@@ -4,7 +4,7 @@ import com.barium.client.optimization.CameraRotationTracker;
 import com.barium.client.optimization.EntityOutlineOptimizer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.Framebuffer;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

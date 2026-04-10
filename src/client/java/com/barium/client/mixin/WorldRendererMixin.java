@@ -8,11 +8,11 @@ import com.barium.client.util.ChunkVisibilityManager;
 import com.barium.client.util.FloodFillVisibilityManager;
 import com.barium.config.BariumConfig;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.Frustum;
-import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.chunk.ChunkBuilder;
-import net.minecraft.client.render.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.Camera;
+import net.minecraft.client.renderer.Frustum;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.chunk.ChunkBuilder;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -49,7 +49,7 @@ public abstract class WorldRendererMixin {
         method = "fillEntityOutlineRenderStates",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/render/entity/state/EntityRenderState;hasOutline()Z"
+            target = "Lnet/minecraft/client/renderer/entity/state/EntityRenderState;hasOutline()Z"
         ),
         require = 0
     )
@@ -79,7 +79,7 @@ public abstract class WorldRendererMixin {
     /**
      * Reseta contadores e prepara o chunk builder antes da fase de atualização de chunks.
      */
-    @Inject(method = "updateChunks(Lnet/minecraft/client/render/Camera;)V", at = @At("HEAD"))
+    @Inject(method = "updateChunks(Lnet/minecraft/client/renderer/Camera;)V", at = @At("HEAD"))
     private void barium$beforeUpdateChunks(Camera camera, CallbackInfo ci) {
         // 1. Atualiza o Frustum Culling
         Frustum frustum = ((WorldRendererAccessor) this).getFrustum();
