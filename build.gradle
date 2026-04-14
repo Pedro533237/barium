@@ -1,5 +1,5 @@
 plugins {
-	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom' version "1.16-SNAPSHOT"
 	id 'maven-publish'
 }
 
@@ -45,7 +45,7 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     //Fabric api
-    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     //Mod Menu
     implementation "com.terraformersmc:modmenu:${project.modmenu_version}"
