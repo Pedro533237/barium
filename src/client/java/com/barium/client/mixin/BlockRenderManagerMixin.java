@@ -2,7 +2,7 @@ package com.barium.client.mixin;
 
 import com.barium.config.BariumConfig;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockStat;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.references.Blocks;
 import net.minecraft.client.Minecraft;
 import com.mojang.blaze3d.vertex.VertexConsumer;
