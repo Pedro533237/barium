@@ -1,8 +1,8 @@
 package com.barium.client.optimization;
 
 import com.barium.config.BariumConfig;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 
 public class GuiRendererOptimizer {
 

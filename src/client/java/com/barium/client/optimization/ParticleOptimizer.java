@@ -3,7 +3,7 @@ package com.barium.client.optimization;
 import com.barium.client.mixin.ParticleAccessor;
 import com.barium.config.BariumConfig;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

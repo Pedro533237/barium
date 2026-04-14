@@ -1,7 +1,7 @@
 package com.barium.client.optimization;
 
 import com.barium.config.BariumConfig;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.IdentityHashMap;
 import java.util.Iterator;

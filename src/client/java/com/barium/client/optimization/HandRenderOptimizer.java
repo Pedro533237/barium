@@ -1,8 +1,8 @@
 package com.barium.client.optimization;
 
 import com.barium.config.BariumConfig;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import org.lwjgl.glfw.GLFW;
 
 public final class HandRenderOptimizer {

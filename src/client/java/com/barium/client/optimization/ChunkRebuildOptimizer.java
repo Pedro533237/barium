@@ -1,7 +1,7 @@
 package com.barium.client.optimization;
 
 import com.barium.config.BariumConfig;
-import net.minecraft.world.chunk.ChunkSection;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 
 public class ChunkRebuildOptimizer {
 
@@ -12,7 +12,7 @@ public class ChunkRebuildOptimizer {
      * @param section A ChunkSection a ser verificada.
      * @return true se a seção deve ser pulada (é vazia), false caso contrário.
      */
-    public static boolean shouldSkipSection(ChunkSection section) {
+    public static boolean shouldSkipSection(LevelChunkSection section) {
         // Se a otimização estiver desativada nas configs, nós revertemos para a lógica original do vanilla.
         if (!BariumConfig.C.ENABLE_EMPTY_CHUNK_SECTION_CULLING) {
             // A chamada original era section.isEmpty(), então retornamos exatamente isso.

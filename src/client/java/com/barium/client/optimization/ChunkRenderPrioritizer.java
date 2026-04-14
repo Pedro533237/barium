@@ -1,8 +1,8 @@
 package com.barium.client.optimization;
 
-import net.minecraft.client.render.chunk.ChunkBuilder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.renderer.chunk.SectionRenderDispatcher;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 
 public class ChunkRenderPrioritizer {
     

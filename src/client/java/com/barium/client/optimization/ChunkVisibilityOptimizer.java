@@ -1,8 +1,8 @@
 package com.barium.client.optimization;
 
-import net.minecraft.client.render.Camera;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Box;
+import net.minecraft.client.Camera;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
 
 /**
  * Otimizador de visibilidade de chunk usando lógica semelhante à usada no Sodium.
