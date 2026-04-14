@@ -1,6 +1,6 @@
 package com.barium.client.optimization;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class CameraRotationTracker {
     private static float lastYaw = 0;

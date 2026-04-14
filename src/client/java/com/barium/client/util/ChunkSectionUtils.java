@@ -1,6 +1,6 @@
 package com.barium.client.util;
 
-import net.minecraft.block.Blocks;
+import net.minecraft.references.Blocks;
 import net.minecraft.world.chunk.ChunkSection;
 
 public class ChunkSectionUtils {

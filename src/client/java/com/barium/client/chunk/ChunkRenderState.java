@@ -1,6 +1,6 @@
 package com.barium.client.chunk;
 
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.level.ChunkPos;
 
 public final class ChunkRenderState {
     private final ChunkPos pos;
