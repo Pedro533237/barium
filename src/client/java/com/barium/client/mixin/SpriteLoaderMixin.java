@@ -1,7 +1,7 @@
 package com.barium.client.mixin;
 
 import com.barium.config.BariumConfig;
-import net.minecraft.client.texture.SpriteLoader;
+import net.minecraft.client.renderer.texture.SpriteLoader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;

@@ -1,7 +1,7 @@
 package com.barium.client.mixin;
 
 import com.barium.config.BariumConfig;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 

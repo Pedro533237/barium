@@ -2,8 +2,8 @@ package com.barium.client.mixin;
 
 import com.barium.client.optimization.HudOptimizer;
 import com.barium.config.BariumConfig;
-import net.minecraft.client.gui.hud.DebugHud;
-import net.minecraft.util.Formatting;
+import net.minecraft.client.gui.components.DebugScreenOverlay;
+import net.minecraft.ChatFormatting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
