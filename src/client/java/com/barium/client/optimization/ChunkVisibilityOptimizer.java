@@ -1,6 +1,6 @@
 package com.barium.client.optimization;
 
-import net.minecraft.client.render.Camera;
+import net.minecraft.client.renderer.Camera;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Box;
 

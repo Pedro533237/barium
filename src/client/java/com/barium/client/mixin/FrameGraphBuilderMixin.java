@@ -1,7 +1,7 @@
 package com.barium.client.mixin;
 
 import com.barium.config.BariumConfig;
-import net.minecraft.client.render.FrameGraphBuilder;
+import net.minecraft.client.renderer.FrameGraphBuilder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +31,7 @@ public abstract class FrameGraphBuilderMixin {
 
     // Otimiza a alocação da lista para evitar redimensionamento de array a cada frame
     @Redirect(
-        method = "run(Lnet/minecraft/client/util/ObjectAllocator;Lnet/minecraft/client/render/FrameGraphBuilder$Profiler;)V",
+        method = "run(Lnet/minecraft/client/util/ObjectAllocator;Lnet/minecraft/client/renderer/FrameGraphBuilder$Profiler;)V",
         at = @At(value = "NEW", target = "java/util/ArrayList")
     )
     private ArrayList<?> barium$optimizeListAllocation(int initialCapacity) {
