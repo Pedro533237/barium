@@ -15,7 +15,7 @@ base {
 
 loom {
 
-	useIntermediateMappings = true
+	useIntermediateMappings = false
 	intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
 
 }
@@ -81,7 +81,7 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = 'UTF-8'
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
