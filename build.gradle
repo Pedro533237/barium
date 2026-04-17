@@ -33,7 +33,12 @@ loom {
 	}
 }
 
+configurations {
+	api.extendsFrom includeApi
+}
+
 repositories {
+	    mavenCentral()
 		maven {
 		url = "https://repo.codemc.io/repository/relativitymc/"
     }
