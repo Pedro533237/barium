@@ -25,23 +25,18 @@ loom {
 	useIntermediateMappings = true
 	intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
 
-	repositories.named("Mojang", MavenArtifactRepository) {
-	artifactUrls ArtifactRepositoryContainer.MAVEN_CENTRAL_URL
-}
-
 	mods {
 		"barium" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
 	}
-
-	mixin {
-		defaultRefmapName = "barium-refmap.json"
-	}
 }
 
 repositories {
+		maven {
+		url = "https://repo.codemc.io/repository/relativitymc/"
+    }
     maven {
         name = 'ClothConfig'
         url = 'https://maven.shedaniel.me/'
@@ -50,9 +45,6 @@ repositories {
         name = 'ModMenu'
         url = 'https://maven.terraformersmc.com/releases/'
 	}
-	maven {
-		url = "https://repo.codemc.io/repository/relativitymc/"
-    }
 }
 
 dependencies {
