@@ -1,7 +1,7 @@
 // build.gradle (FINAL CORRECTED VERSION)
 
 plugins {
-	id 'fabric-loom' version '1.16-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom-remap' version '1.15-SNAPSHOT'
 	id 'maven-publish'
 }
 
