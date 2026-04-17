@@ -22,6 +22,10 @@ base {
 loom {
 	splitEnvironmentSourceSets()
 
+	useIntermediateMappings = true
+	intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
+}
+
 	mods {
 		"barium" {
 			sourceSet sourceSets.main
