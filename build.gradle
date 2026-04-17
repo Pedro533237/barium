@@ -1,22 +1,12 @@
-// build.gradle (FINAL CORRECTED VERSION)
-
 plugins {
 	id 'net.fabricmc.fabric-loom-remap' version '1.15-SNAPSHOT'
 	id 'maven-publish'
 }
 
-// --- CONFIGURATION CACHE-SAFE VARIABLES ---
-// Read all values needed by tasks from the project object here.
-// These final variables are safe to use in task actions below.
-final String modVersionForExpansion = project.version
-final String archivesBaseName = project.archives_base_name
-
-version = project.mod_version
-group = project.maven_group
-
 base {
-	// The value is set here using the safe variable.
-	archivesName = archivesBaseName
+	archivesName = "${project.archives_base_name}-mc${project.minecraft_version}"
+	version = project.mod_version + "." + getVersionSuffix()
+	group = project.maven_group
 }
 
 loom {
@@ -24,6 +14,10 @@ loom {
 	useIntermediateMappings = true
 	intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
 
+}
+
+repositories.named("Mojang", MavenArtifactRepository) {
+	artifactUrls ArtifactRepositoryContainer.MAVEN_CENTRAL_URL
 }
 
 configurations {
