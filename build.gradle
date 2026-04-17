@@ -15,8 +15,9 @@ base {
 
 loom {
 
-	useIntermediateMappings = true
-	intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
+    loom {
+        intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
+        useIntermediateMappings = true
 
 }
 
