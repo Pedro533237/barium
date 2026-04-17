@@ -16,7 +16,8 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '25'
-          distribution: 'microsoft'
+          distribution: 'zulu'
+          java-package: jdk
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
