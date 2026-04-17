@@ -3,10 +3,14 @@ plugins {
 	id 'maven-publish'
 }
 
+final String modVersionForExpansion = project.version
+final String archivesBaseName = project.archives_base_name
+
+version = project.mod_version
+group = project.maven_group
+
 base {
-	archivesName = "${project.archives_base_name}-mc${project.minecraft_version}"
-	version = project.mod_version + "." + getVersionSuffix()
-	group = project.maven_group
+	archivesName = archivesBaseName
 }
 
 loom {
