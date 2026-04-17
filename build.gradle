@@ -24,12 +24,6 @@ loom {
 	useIntermediateMappings = true
 	intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
 
-	mods {
-		"barium" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-	}
 }
 
 configurations {
@@ -66,9 +60,24 @@ dependencies {
     modImplementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
 }
 
+afterEvaluate {
+	migrateMappings.configure {
+		outputDir = project.file("build/remappedSrc")
+		doLast {
+			copy {
+				from project.file("build/remappedSrc")
+				into project.file("src/client/java")
+				into project.file("src/main/java")
+			}
+		}
+	}
+}
+
 processResources {
+	inputs.property "version", project.version + "+" + project.minecraft_version
+
 	filesMatching("fabric.mod.json") {
-		expand("version": modVersionForExpansion)
+		expand "version": project.version + "+" + project.minecraft_version
 	}
 }
 
