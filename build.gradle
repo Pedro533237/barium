@@ -31,7 +31,7 @@ configurations {
 repositories {
 	    mavenCentral()
 		maven {
-		url = "https://repo.codemc.io/repository/relativitymc/"
+		url = 'https://repo.codemc.io/repository/relativitymc/'
     }
     maven {
         name = 'ClothConfig'
@@ -49,7 +49,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     //Fabric api
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    //modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     //Mod Menu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
