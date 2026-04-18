@@ -15,9 +15,10 @@ base {
 
 loom {
 
-    intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
     useIntermediateMappings = true
 
+    // Evita falha de remapeamento em access wideners transitivos de dependências com namespace divergente.
+    enableTransitiveAccessWideners = false
 }
 
 repositories.named("Mojang", MavenArtifactRepository) {
