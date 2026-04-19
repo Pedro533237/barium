@@ -1,6 +1,6 @@
 package com.barium.client.mixin;
 
-import com.barium.client.optimization.OutlineOptimizationController;
+import com.barium.client.optimization.FrameTimeTracker;
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -15,11 +15,11 @@ public class GameRendererMixin {
 
 	@Inject(method = "render", at = @At("HEAD"))
 	private void barium$beforeRender(CallbackInfo ci) {
-		this.barium$frameStartNanos = OutlineOptimizationController.beginFrame();
+		this.barium$frameStartNanos = FrameTimeTracker.beginFrame();
 	}
 
 	@Inject(method = "render", at = @At("TAIL"))
 	private void barium$afterRender(CallbackInfo ci) {
-		OutlineOptimizationController.endFrame(this.barium$frameStartNanos);
+		FrameTimeTracker.endFrame(this.barium$frameStartNanos);
 	}
 }
