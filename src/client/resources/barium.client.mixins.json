@@ -3,7 +3,9 @@
 	"package": "com.barium.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"ExampleClientMixin"
+		"ClientLevelMixin",
+		"GameRendererMixin",
+		"LevelRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
