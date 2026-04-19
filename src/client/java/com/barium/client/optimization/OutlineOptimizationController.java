@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Throttles expensive outline/post passes using render + tick pressure.
+ * Dynamic frame-pressure controller for expensive client-side render passes.
  */
 public final class OutlineOptimizationController {
 	private static final AtomicLong AVERAGE_RENDER_NANOS = new AtomicLong(16_000_000L);
@@ -30,14 +30,16 @@ public final class OutlineOptimizationController {
 	}
 
 	public static boolean shouldRenderEntityOutline() {
-		long averageRender = AVERAGE_RENDER_NANOS.get();
-		long averageTick = AVERAGE_TICK_NANOS.get();
-		int frame = FRAME_COUNTER.get();
-		int step = calculateStep(averageRender, averageTick);
-		return frame % step == 0;
+		int step = calculateOutlineStep(AVERAGE_RENDER_NANOS.get(), AVERAGE_TICK_NANOS.get());
+		return FRAME_COUNTER.get() % step == 0;
 	}
 
-	private static int calculateStep(long averageRender, long averageTick) {
+	public static boolean shouldRenderLevel() {
+		int step = calculateLevelStep(AVERAGE_RENDER_NANOS.get(), AVERAGE_TICK_NANOS.get());
+		return FRAME_COUNTER.get() % step == 0;
+	}
+
+	private static int calculateOutlineStep(long averageRender, long averageTick) {
 		if (averageRender >= 30_000_000L || averageTick >= 50_000_000L) {
 			return 6;
 		}
@@ -47,6 +49,18 @@ public final class OutlineOptimizationController {
 		}
 
 		if (averageRender >= 16_000_000L || averageTick >= 25_000_000L) {
+			return 2;
+		}
+
+		return 1;
+	}
+
+	private static int calculateLevelStep(long averageRender, long averageTick) {
+		if (averageRender >= 45_000_000L || averageTick >= 60_000_000L) {
+			return 3;
+		}
+
+		if (averageRender >= 30_000_000L || averageTick >= 45_000_000L) {
 			return 2;
 		}
 
