@@ -1,42 +1,38 @@
 {
-  "schemaVersion": 1,
-  "id": "barium",
-  "version": "1.0.1",
-  "name": "Barium",
-  "description": "Mod de otimização para Minecraft 1.21.9",
-  "authors": [
-    "PedrixzZDev"
-  ],
-  "contact": {
-    "homepage": "https://github.com/BariumMC/barium",
-    "sources": "https://github.com/BariumMC/barium"
-  },
-  "license": "CC0-1.0",
-  "icon": "assets/barium/icon.png",
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "com.barium.BariumMod"
-    ],
-    "client": [
-      "com.barium.client.BariumClient"
-    ],
-    "modmenu": [
-      "com.barium.client.config.BariumModMenu"
-    ]
-  },
-  "mixins": [
-    "barium.mixins.json",
-    "barium.client.mixins.json"
-  ],
-  "depends": {
-    "fabricloader": ">=0.14.0",
-    "fabric": "*",
-    "minecraft": "1.21.9",
-    "java": ">=21",
-    "cloth-config": "*"
-  },
-  "suggests": {
-    "modmenu": "*"
-  }
+	"schemaVersion": 1,
+	"id": "barium",
+	"version": "${version}",
+	"name": "Barium",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/barium/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.barium.Barium"
+		],
+		"client": [
+			"com.barium.client.BariumClient"
+		]
+	},
+	"mixins": [
+		"barium.mixins.json",
+		{
+			"config": "barium.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~26.1.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
 }

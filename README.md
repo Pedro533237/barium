@@ -1,11 +1,9 @@
-# 🚀 Barium (for Minecraft 1.21.10)
-Barium is a lightweight performance optimization mod for Minecraft 1.21.10. It improves rendering efficiency, chunk loading, and overall game performance while preserving visual quality. Whether you're playing in modded environments or large vanilla worlds, Barium helps ensure smoother gameplay.
+# Barium
 
-## ✅ Key Features:
-Improved chunk and block rendering
+## Setup
 
-Reduced lag spikes and faster world loading
+For setup instructions, please see the [Fabric Documentation page](https://docs.fabricmc.net/develop/getting-started/creating-a-project#setting-up) related to the IDE that you are using.
 
-Compatible with Fabric modpacks
+## License
 
-Ideal for enhancing performance in demanding worlds
+This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.

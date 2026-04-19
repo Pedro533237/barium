@@ -1,39 +1,14 @@
 {
 	"required": true,
 	"package": "com.barium.client.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"plugin": "com.barium.BariumMixinPlugin",
+	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"BlockRenderManagerMixin",
-		"MathHelperMixin",
-		"BlockEntityRenderManagerMixin",
-		"ChunkBuilderMixin",
-		"ChunkRenderMixin",
-		"ClientWorldMixin",
-		"ClientPlayNetworkHandlerMixin",
-		"DebugHudMixin",
-		"FrameGraphBuilderMixin",
-		"EntityRendererMixin",
-		"GameRendererMixin",
-		"HandRenderMixin",
-		"GuiRendererMixin",
-		"InGameHudMixin",
-		"ItemStackMixin",
-		"DrawContextMixin",
-		"HandledScreenMixin",
-		"ParticleAccessor",
-		"ParticleManagerMixin",
-		"ParticleMixin",
-		"RenderSystemMixin",
-		"SectionBuilderMixin",
-		"SoundManagerMixin",
-		"SpriteLoaderMixin",
-		"TextureAtlasMixin",
-		"WorldRendererAccessor",
-		"WorldRendererMixin"
+		"ExampleClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
-	"refmap": "barium-refmap.json"
+	"overwrites": {
+		"requireAnnotations": true
+	}
 }
