@@ -13,7 +13,8 @@ public class LevelRendererMixin {
 	@Inject(method = "doEntityOutline", at = @At("HEAD"), cancellable = true)
 	private void barium$throttleEntityOutline(CallbackInfo ci) {
 		long averageFrameNanos = FrameTimeTracker.getAverageFrameNanos();
-		if (!OutlineThrottlePolicy.shouldRenderOutline(averageFrameNanos)) {
+		long p95FrameNanos = FrameTimeTracker.getP95FrameNanos();
+		if (!OutlineThrottlePolicy.shouldRenderOutline(averageFrameNanos, p95FrameNanos)) {
 			ci.cancel();
 		}
 	}
