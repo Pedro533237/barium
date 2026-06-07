@@ -1,5 +1,6 @@
 package com.barium.client.optimization;
 
+import com.barium.client.BariumClient;
 import com.barium.config.BariumConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -11,7 +12,8 @@ public class GuiRendererOptimizer {
     private static double lastMouseY = -1;
     private static boolean forceRenderNext = true;
     private static Screen lastScreen = null;
-    
+    private static int frameSkipCursor = 0;
+
     public static void preRenderOptimize() {
         // Nada pesado aqui
     }
@@ -28,7 +30,23 @@ public class GuiRendererOptimizer {
         if (client == null || client.options == null) return false;
         if (client.currentScreen != null) return false;
 
-        return client.options.hudHidden;
+        if (client.options.hudHidden) {
+            return true;
+        }
+
+        if (!BariumConfig.C.ENABLE_ADAPTIVE_GUI_FRAME_SKIP) {
+            return false;
+        }
+
+        int currentFps = BariumClient.getCurrentFps();
+        if (currentFps > BariumConfig.C.GUI_FRAME_SKIP_FPS_THRESHOLD) {
+            frameSkipCursor = 0;
+            return false;
+        }
+
+        int interval = Math.max(1, BariumConfig.C.GUI_FRAME_SKIP_INTERVAL);
+        frameSkipCursor = (frameSkipCursor + 1) % (interval + 1);
+        return frameSkipCursor != 0;
     }
 
     /**
@@ -85,7 +103,18 @@ public class GuiRendererOptimizer {
             return false;
         }
 
-        // Evita flicker: não pulamos mais frames inteiros de GUI com conteúdo.
+        // Modo adaptativo para HUD (sem tela aberta): permite pular draws preparados
+        // quando FPS está baixo e não houve mudança relevante no estado visual.
+        if (BariumConfig.C.ENABLE_ADAPTIVE_GUI_FRAME_SKIP
+                && currentScreen == null
+                && BariumClient.getCurrentFps() <= BariumConfig.C.GUI_FRAME_SKIP_FPS_THRESHOLD) {
+            int interval = Math.max(1, BariumConfig.C.GUI_FRAME_SKIP_INTERVAL);
+            frameSkipCursor = (frameSkipCursor + 1) % (interval + 1);
+            if (frameSkipCursor != 0) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -104,6 +133,7 @@ public class GuiRendererOptimizer {
         forceRenderNext = true;
         lastDrawCount = -1;
         lastScreen = null;
+        frameSkipCursor = 0;
     }
 
     public static void forceNextRender() {

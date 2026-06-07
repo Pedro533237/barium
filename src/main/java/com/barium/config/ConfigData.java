@@ -7,6 +7,7 @@ public class ConfigData {
 
     // ================== Chunk Performance ================== //
     public boolean ENABLE_FRUSTUM_CHUNK_CULLING = true;
+    public boolean ENABLE_AGGRESSIVE_CHUNK_BUILD_CULLING = false;
     public boolean ENABLE_FLOOD_FILL_CULLING = true;
     public boolean ENABLE_OCCLUSION_CULLING = true;
     public boolean ENABLE_VISIBILITY_GRAPH_CULLING = true;
@@ -81,6 +82,9 @@ public class ConfigData {
     public boolean DISABLE_TRANSLUCENT_RENDERING = false;
     public boolean DISABLE_TEXTURE_ANIMATIONS = false;
     public boolean ENABLE_GUI_OPTIMIZATION = true;
+    public boolean ENABLE_ADAPTIVE_GUI_FRAME_SKIP = false;
+    public int GUI_FRAME_SKIP_INTERVAL = 1;
+    public int GUI_FRAME_SKIP_FPS_THRESHOLD = 45;
     public int MIPMAP_LEVEL_OVERRIDE = 0;
     public boolean ENABLE_HAND_RENDER_THROTTLING = false;
     public int HAND_RENDER_SKIP_FRAMES = 1;
@@ -93,6 +97,13 @@ public class ConfigData {
     public boolean ENABLE_BACKGROUND_EVENT_THROTTLING = true;
     public boolean ENABLE_FOCUSED_EVENT_THROTTLING = true;
     public int FOCUSED_EVENT_POLL_INTERVAL_MS = 5;
+
+    // ================== Advanced Rendering Pipeline ================== //
+    public boolean ENABLE_FACE_CULLING_BETWEEN_BLOCKS = true;
+    public boolean ENABLE_Z_PREPASS = true;
+    public boolean ENABLE_VERTEX_POOLING = true;
+    public boolean ENABLE_INSTANCED_RENDERING = false;
+    public boolean ENABLE_RENDER_DEBUG_METRICS = true;
 
     // ================== Fast Math ================== //
     public boolean ENABLE_FAST_MATH = true;

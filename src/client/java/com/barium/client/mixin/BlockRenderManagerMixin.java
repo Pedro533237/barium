@@ -1,5 +1,7 @@
 package com.barium.client.mixin;
 
+import com.barium.client.render.culling.FaceCullingManager;
+import com.barium.client.render.pipeline.RenderDebugMetrics;
 import com.barium.config.BariumConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -9,6 +11,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.profiler.Profilers;
 import net.minecraft.world.BlockRenderView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,6 +25,35 @@ public class BlockRenderManagerMixin {
 
     @Inject(method = "renderBlock", at = @At("HEAD"), cancellable = true)
     private void barium$optimizedFoliageCulling(BlockState state, BlockPos pos, BlockRenderView world, MatrixStack matrices, VertexConsumer vertexConsumer, boolean cull, List<?> parts, CallbackInfo ci) {
+        int lx = pos.getX() & 15;
+        int ly = pos.getY() & 15;
+        int lz = pos.getZ() & 15;
+        boolean isInteriorBlock = lx > 0 && lx < 15 && ly > 0 && ly < 15 && lz > 0 && lz < 15;
+
+        if (BariumConfig.C.ENABLE_FACE_CULLING_BETWEEN_BLOCKS && cull
+                && isInteriorBlock
+                && world instanceof net.minecraft.client.render.chunk.ChunkRendererRegion
+                && !state.hasBlockEntity()
+                && state.isOpaqueFullCube()) {
+            MinecraftClient client = MinecraftClient.getInstance();
+            if (client != null) {
+                Profilers.get().push("barium_face_culling");
+            }
+            try {
+                if (FaceCullingManager.isFullyOccluded(world, pos, state)) {
+                    if (BariumConfig.C.ENABLE_RENDER_DEBUG_METRICS) {
+                        RenderDebugMetrics.addCulledFace();
+                    }
+                    ci.cancel();
+                    return;
+                }
+            } finally {
+                if (client != null) {
+                    Profilers.get().pop();
+                }
+            }
+        }
+
         int level = BariumConfig.C.DENSE_FOLIAGE_CULLING_LEVEL;
         if (BariumConfig.C.ENABLE_DENSE_FOLIAGE_CULLING && level > 0) {
             if (state.isIn(net.minecraft.registry.tag.BlockTags.LEAVES) || state.isOf(Blocks.SHORT_GRASS)) {

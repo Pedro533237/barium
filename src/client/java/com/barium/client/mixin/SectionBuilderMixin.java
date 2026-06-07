@@ -125,6 +125,7 @@ public class SectionBuilderMixin {
                                 continue; // Ignora este bloco, trata como ar
                             }
                         }
+
                         return false; // É um bloco sólido ou importante, renderiza a seção.
                     }
                 }
