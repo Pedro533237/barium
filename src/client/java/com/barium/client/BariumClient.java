@@ -3,6 +3,8 @@ package com.barium.client;
 import com.barium.BariumMod;
 import com.barium.client.chunk.ClientChunkManager;
 import com.barium.client.optimization.ParticleOptimizer;
+import com.barium.client.optimization.ZPrepassRenderer;
+import com.barium.client.optimization.VertexPullingManager;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
 import net.fabricmc.api.ClientModInitializer;
@@ -38,6 +40,9 @@ public class BariumClient implements ClientModInitializer {
     public void onInitializeClient() {
         instance = this;
         BariumMod.LOGGER.info("Initializing Barium Client...");
+
+        ZPrepassRenderer.initialize();
+        VertexPullingManager.initialize();
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.world == null) {

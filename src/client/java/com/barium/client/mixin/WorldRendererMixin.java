@@ -3,6 +3,8 @@ package com.barium.client.mixin;
 import com.barium.client.chunk.ClientChunkManager;
 import com.barium.client.optimization.EntityOutlineOptimizer;
 import com.barium.client.optimization.ChunkUploadThrottler;
+import com.barium.client.optimization.ZPrepassRenderer;
+import com.barium.client.optimization.VertexPullingManager;
 import com.barium.client.util.ChunkRenderManager;
 import com.barium.client.util.ChunkVisibilityManager;
 import com.barium.client.util.FloodFillVisibilityManager;
@@ -14,6 +16,7 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.chunk.ChunkBuilder;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.profiler.Profilers;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,6 +48,22 @@ public abstract class WorldRendererMixin {
      * Isso nos permite saber, com CUSTO ZERO (pois o jogo já faz essa verificação),
      * se existe algo brilhando na tela.
      */
+
+    @Inject(method = "render", at = @At("TAIL"), require = 0)
+    private void barium$runZPrepass(CallbackInfo ci) {
+        if (BariumConfig.C.ENABLE_Z_PREPASS) {
+            Profilers.get().push("barium_z_prepass");
+            ZPrepassRenderer.runPrepassForRegisteredRenderers();
+            Profilers.get().pop();
+        }
+
+        if (BariumConfig.C.ENABLE_VERTEX_PULLING) {
+            Profilers.get().push("barium_vertex_pulling");
+            VertexPullingManager.run();
+            Profilers.get().pop();
+        }
+    }
+
     @Redirect(
         method = "fillEntityOutlineRenderStates",
         at = @At(
