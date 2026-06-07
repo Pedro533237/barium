@@ -27,6 +27,7 @@ public class ChunkVisibilityManager {
     
     private Future<?> visibilityTask = null;
     private long lastUpdateTime = 0;
+    private volatile boolean hasVisibilityData = false;
 
     public void update(MinecraftClient client) {
         if (client.player == null || client.world == null) return;
@@ -108,6 +109,7 @@ public class ChunkVisibilityManager {
             }
         }
         this.visibleSectionKeys.set(finalVisibleSections);
+        this.hasVisibilityData = true;
     }
 
     private void traceRayAndAddSections(Vec3d start, Vec3d end, LongSet sectionSet) {
@@ -158,14 +160,16 @@ public class ChunkVisibilityManager {
     }
 
     public boolean isChunkPotentiallyVisible(int chunkX, int chunkZ) {
+        if (!hasVisibilityData) return true;
         LongSet visibleSet = visibleChunkKeys.get();
-        if (visibleSet == null) return true;
+        if (visibleSet == null || visibleSet.isEmpty()) return true;
         return visibleSet.contains(ChunkPos.toLong(chunkX, chunkZ));
     }
     
     public boolean isSectionPotentiallyVisible(int sectionX, int sectionY, int sectionZ) {
+        if (!hasVisibilityData) return true;
         LongSet visibleSet = visibleSectionKeys.get();
-        if (visibleSet == null) return true;
+        if (visibleSet == null || visibleSet.isEmpty()) return true;
         return visibleSet.contains(BlockPos.asLong(sectionX, sectionY, sectionZ));
     }
     
@@ -173,5 +177,6 @@ public class ChunkVisibilityManager {
         this.visibleChunkKeys.set(new LongOpenHashSet());
         this.visibleSectionKeys.set(new LongOpenHashSet());
         this.lastUpdateTime = 0;
+        this.hasVisibilityData = false;
     }
 }

@@ -97,6 +97,15 @@
   "option.barium.hand_render_skip_frames": "Frames Pulados da Mão",
   "tooltip.barium.hand_render_skip_frames": "Define quantos frames da mão serão pulados entre renders. 1 = leve, 3 = agressivo.",
   
+  "option.barium.enable_z_prepass": "Ativar Z-Prepass para Geometria Opaca Custom",
+  "tooltip.barium.enable_z_prepass": "Executa um passe só de profundidade antes do passe de cor para renderizadores opacos custom do Barium. Só compensa com shader pesado; reduz overdraw, mas desenha a geometria 2x.",
+
+  "option.barium.enable_vertex_culling": "Ativar Vertex/Backface Culling",
+  "tooltip.barium.enable_vertex_culling": "Ativa culling de faces traseiras durante o Z-prepass custom do Barium para reduzir carga de vértices e fragmentos em faces ocultas.",
+
+  "option.barium.enable_vertex_pulling": "Ativar Vertex Pulling (Experimental)",
+  "tooltip.barium.enable_vertex_pulling": "Executa renderizadores custom de faces empacotadas em estilo vertex pulling (1 face packed expandida no shader). Aparece no profiler como barium_vertex_pulling.",
+
   "option.barium.enable_entity_tick_culling": "Otimização de Ticks de Entidades",
   "tooltip.barium.enable_entity_tick_culling": "Reduz a frequência de atualização da lógica (IA) de entidades distantes.",
 
