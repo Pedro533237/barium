@@ -1,4 +1,3 @@
-// --- Substitua o conteúdo em: src/client/java/com/barium/client/mixin/EntityRendererMixin.java ---
 package com.barium.client.mixin;
 
 import com.barium.client.optimization.EntityOptimizer;
@@ -12,21 +11,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRenderer.class)
-public abstract class EntityRendererMixin<T extends Entity> {
+public abstract class EntityRendererMixin {
 
-    @Inject(
-        method = "shouldRender(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/render/Frustum;DDD)Z",
-        at = @At("HEAD"),
-        cancellable = true
-    )
-    private void barium$cullByDistance(T entity, Frustum frustum, double cameraX, double cameraY, double cameraZ, CallbackInfoReturnable<Boolean> cir) {
-        // Se a otimização de distância estiver desligada, não fazemos nada.
-        if (!BariumConfig.C.ENABLE_ENTITY_CULLING) {
-            return;
-        }
-
-        // Delega a lógica de culling por distância e frustum para nossa classe.
-        if (!EntityOptimizer.shouldRender(entity, cameraX, cameraY, cameraZ, frustum)) {
+    @Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
+    private void barium$cullByDistance(Entity entity, Frustum frustum, double camX, double camY, double camZ,
+                                       CallbackInfoReturnable<Boolean> cir) {
+        if (!BariumConfig.C.ENABLE_ENTITY_CULLING) return;
+        if (!EntityOptimizer.shouldRenderByDistance(entity, camX, camY, camZ)) {
             cir.setReturnValue(false);
         }
     }

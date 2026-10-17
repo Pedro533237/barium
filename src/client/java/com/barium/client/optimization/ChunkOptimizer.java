@@ -1,57 +1,60 @@
 package com.barium.client.optimization;
 
 import com.barium.config.BariumConfig;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Camera;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
+/** Culling de block entities (baús, placas, camas, etc.). */
 public class ChunkOptimizer {
 
-    public static boolean shouldRenderBlockEntity(BlockEntity blockEntity, Camera camera) {
-        if (!BariumConfig.C.ENABLE_BLOCK_ENTITY_CULLING) return true;
-        
-        double distSq = blockEntity.getPos().getSquaredDistance(camera.getPos());
-        return distSq <= BariumConfig.C.MAX_BLOCK_ENTITY_RENDER_DISTANCE_SQ;
+    private static final double[][] TEST_POINTS = {
+            {0.5, 0.5, 0.5}, {0.1, 0.1, 0.1}, {0.9, 0.1, 0.1},
+            {0.1, 0.9, 0.1}, {0.1, 0.1, 0.9}, {0.9, 0.9, 0.9}
+    };
+
+    public static boolean shouldRenderBlockEntity(BlockEntity be, Vec3 cam) {
+        BlockPos p = be.getBlockPos();
+        double dx = p.getX() + 0.5 - cam.x;
+        double dy = p.getY() + 0.5 - cam.y;
+        double dz = p.getZ() + 0.5 - cam.z;
+        return dx * dx + dy * dy + dz * dz <= BariumConfig.C.MAX_BLOCK_ENTITY_RENDER_DISTANCE_SQ;
     }
 
-    public static boolean isBlockEntityOccluded(BlockEntity blockEntity, Camera camera) {
-        if (!BariumConfig.C.ENABLE_BLOCK_ENTITY_OCCLUSION_CULLING) return false;
+    public static boolean isBlockEntityOccluded(BlockEntity be, Vec3 cam) {
+        Level level = be.getLevel();
+        if (level == null) return false;
 
-        // Não aplicar oclusão em baús para evitar bugs de invisibilidade
-        if (blockEntity instanceof ChestBlockEntity) return false;
+        BlockPos pos = be.getBlockPos();
+        double dx = pos.getX() + 0.5 - cam.x;
+        double dy = pos.getY() + 0.5 - cam.y;
+        double dz = pos.getZ() + 0.5 - cam.z;
+        if (dx * dx + dy * dy + dz * dz < BariumConfig.C.BLOCK_ENTITY_OCCLUSION_MIN_DISTANCE_SQ) {
+            return false;
+        }
 
-        World world = blockEntity.getWorld();
-        if (world == null) return false;
+        AABB box = new AABB(pos);
+        var player = Minecraft.getInstance().player;
 
-        BlockPos pos = blockEntity.getPos();
-        Vec3d cameraPos = camera.getPos();
-        
-        // Se estiver muito perto (menos de 4 blocos), não ocluir para evitar bugs visuais
-        if (cameraPos.squaredDistanceTo(Vec3d.ofCenter(pos)) < 16.0) return false;
+        for (double[] t : TEST_POINTS) {
+            Vec3 target = new Vec3(
+                    box.minX + (box.maxX - box.minX) * t[0],
+                    box.minY + (box.maxY - box.minY) * t[1],
+                    box.minZ + (box.maxZ - box.minZ) * t[2]);
 
-        // O segredo: Raycast tipo VISUAL e ignorar o próprio bloco atingido
-        RaycastContext context = new RaycastContext(
-                cameraPos, 
-                Vec3d.ofCenter(pos),
-                RaycastContext.ShapeType.VISUAL, 
-                RaycastContext.FluidHandling.NONE, 
-                MinecraftClient.getInstance().player
-        );
+            BlockHitResult hit = level.clip(new ClipContext(cam, target,
+                    ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
 
-        BlockHitResult hitResult = world.raycast(context);
-
-        // Se o hit for do tipo MISS ou se o bloco atingido for o próprio baú, ele DEVE renderizar
-        if (hitResult.getType() == HitResult.Type.MISS) return false;
-        if (hitResult.getBlockPos().equals(pos)) return false;
-
-        // Se o raio bateu em outro bloco antes, então o baú está escondido
+            if (hit.getType() == HitResult.Type.MISS || hit.getBlockPos().equals(pos)) {
+                return false;
+            }
+        }
         return true;
     }
 }

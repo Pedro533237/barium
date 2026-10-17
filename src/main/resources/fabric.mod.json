@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "barium",
-  "version": "1.0.1",
+  "version": "${version}",
   "name": "Barium",
-  "description": "Mod de otimização para Minecraft 1.21.9",
+  "description": "Mod de otimização para Minecraft 26.3",
   "authors": [
     "PedrixzZDev"
   ],
@@ -12,7 +12,6 @@
     "sources": "https://github.com/BariumMC/barium"
   },
   "license": "CC0-1.0",
-  "icon": "assets/barium/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -20,23 +19,18 @@
     ],
     "client": [
       "com.barium.client.BariumClient"
-    ],
-    "modmenu": [
-      "com.barium.client.config.BariumModMenu"
     ]
   },
   "mixins": [
-    "barium.mixins.json",
-    "barium.client.mixins.json"
+    {
+      "config": "barium.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
-    "fabricloader": ">=0.14.0",
-    "fabric": "*",
-    "minecraft": "1.21.9",
-    "java": ">=21",
-    "cloth-config": "*"
-  },
-  "suggests": {
-    "modmenu": "*"
+    "fabricloader": ">=0.19.2",
+    "fabric-api": "*",
+    "minecraft": "~26.3",
+    "java": ">=25"
   }
 }

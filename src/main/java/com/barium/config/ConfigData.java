@@ -2,56 +2,30 @@ package com.barium.config;
 
 public class ConfigData {
 
-    // ================== Modo Agressivo ================== //
-    public boolean ENABLE_AGGRESSIVE_OPTIMIZATION = false;
+    // ================== Modo Específico de CPU ================== //
+    public boolean ENABLE_LLVMPIPE_MODE = false;
 
     // ================== Chunk Performance ================== //
     public boolean ENABLE_FRUSTUM_CHUNK_CULLING = true;
     public boolean ENABLE_FLOOD_FILL_CULLING = true;
     public boolean ENABLE_OCCLUSION_CULLING = true;
-    public boolean ENABLE_VISIBILITY_GRAPH_CULLING = true;
+    public boolean ENABLE_VISIBILITY_GRAPH_CULLING = false;
     public boolean ENABLE_ADVANCED_SECTION_CULLING = false;
     public boolean ENABLE_ENCLOSED_SECTION_CULLING = false;
     public boolean ENABLE_EMPTY_CHUNK_SECTION_CULLING = true;
-    public boolean ENABLE_PER_SECTION_FRUSTUM_CULLING = true;
-    public boolean ENABLE_FRAME_VISIBILITY_CACHE = true;
-    public boolean ENABLE_PREDICTIVE_OCCLUSION_CULLING = true;
-    public int PREDICTIVE_LOOKAHEAD_MS = 100;
-    public int PREDICTIVE_HORIZONTAL_RADIUS_SECTIONS = 8;
-    public int PREDICTIVE_VERTICAL_RADIUS_SECTIONS = 3;
-    public int PREDICTIVE_FORWARD_EXTRA_SECTIONS = 4;
-
     // ================== Forest / Tree Optimizations ================== //
+    // Quando ativado, se uma seção de chunk contiver principalmente folhas,
+    // ela será ignorada na construção para reduzir o custo de renderização em florestas densas.
     public boolean ENABLE_FOREST_SECTION_CULLING = true;
+    // Percentual (0.0 - 1.0) da amostra que precisa ser folhas para considerar a seção "floresta".
     public double FOREST_SECTION_LEAF_THRESHOLD = 0.85;
     public boolean ENABLE_CHUNK_UPDATE_THROTTLING = true;
-
-    // ================== Câmera / Rotação ================== //
-    public boolean ENABLE_ROTATION_THROTTLING = true;
-    public double ROTATION_THRESHOLD = 2.5;
-
     public boolean ENABLE_DIRECTIONAL_CHUNK_LOADING = true;
     public int MAX_CHUNK_UPLOADS_PER_FRAME = 4;
-
-    // Render Distance
-    public int EFFECTIVE_RENDER_DISTANCE = 0;
-    public int SPARSE_CHUNK_FACTOR = 1;
-    public int DETAILED_RENDER_RADIUS = 2;
-    public int CHUNK_UPDATE_SKIP_RATE = 3;
-
-    // ================== GEOMETRY LOD ================== //
-    public boolean ENABLE_DISTANT_GEOMETRY_CULLING = true;
-    public int DISTANT_GEOMETRY_CULL_DISTANCE = 32; 
-    public boolean DISABLE_DISTANT_TRANSLUCENCY_SORTING = true;
-    public boolean CACHE_TRANSLUCENCY_SORT_WHILE_STABLE = true;
-    public double TRANSLUCENCY_STABLE_CAMERA_DELTA = 0.125;
-    public int DISTANT_DETAIL_CULL_DISTANCE = 64;
-    public boolean ENABLE_AGGRESSIVE_DISTANT_DETAIL_CULLING = true;
 
     // ================== Culling & Level of Detail (LOD) ================== //
     public boolean ENABLE_ENTITY_CULLING = true;
     public double MAX_ENTITY_RENDER_DISTANCE_SQ = 72 * 72;
-    public boolean ENABLE_ENTITY_FRUSTUM_CULLING = true;
     public boolean ENABLE_BLOCK_ENTITY_CULLING = true;
     public double MAX_BLOCK_ENTITY_RENDER_DISTANCE_SQ = 72 * 72;
     public boolean ENABLE_BLOCK_ENTITY_OCCLUSION_CULLING = true;
@@ -80,20 +54,11 @@ public class ConfigData {
     public int ADAPTIVE_FOG_TARGET_FPS = 58;
     public boolean DISABLE_TRANSLUCENT_RENDERING = false;
     public boolean DISABLE_TEXTURE_ANIMATIONS = false;
-    public boolean ENABLE_GUI_OPTIMIZATION = true;
     public int MIPMAP_LEVEL_OVERRIDE = 0;
-    public boolean ENABLE_HAND_RENDER_THROTTLING = false;
-    public int HAND_RENDER_SKIP_FRAMES = 1;
 
     // ================== Game Logic & Tick Optimizations ================== //
     public boolean ENABLE_ENTITY_TICK_CULLING = true;
     public double ENTITY_TICK_CULLING_DISTANCE_SQ = 64 * 64;
     public boolean REDUCE_AMBIENT_PARTICLES = true;
     public boolean ENABLE_HOPPER_TICK_CULLING = true;
-    public boolean ENABLE_BACKGROUND_EVENT_THROTTLING = true;
-    public boolean ENABLE_FOCUSED_EVENT_THROTTLING = true;
-    public int FOCUSED_EVENT_POLL_INTERVAL_MS = 5;
-
-    // ================== Fast Math ================== //
-    public boolean ENABLE_FAST_MATH = true;
 }

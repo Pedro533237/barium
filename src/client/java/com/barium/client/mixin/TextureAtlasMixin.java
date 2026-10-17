@@ -7,15 +7,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * This mixin now ONLY handles disabling texture animations, as the mipmap logic
- * has been moved to SpriteLoaderMixin for correctness and stability.
- */
-@Mixin(SpriteAtlasTexture.class)
+@Mixin(TextureAtlas.class)
 public class TextureAtlasMixin {
 
-    @Inject(method = "tick()V", at = @At("HEAD"), cancellable = true)
-    private void barium$freezeAllAnimatedTextures(CallbackInfo ci) {
+    // "tick" no 1.21.4 e anteriores; "cycleAnimationFrames" nas versões mais novas.
+    @Inject(method = {"tick", "cycleAnimationFrames"}, at = @At("HEAD"), cancellable = true)
+    private void barium$freezeAnimatedTextures(CallbackInfo ci) {
         if (BariumConfig.C.DISABLE_TEXTURE_ANIMATIONS) {
             ci.cancel();
         }

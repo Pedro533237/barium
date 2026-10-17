@@ -1,9 +1,6 @@
 {
   "title.barium.config": "Barium Settings",
 
-  "option.barium.enable_aggressive_optimization": "Enable Aggressive Optimization",
-  "tooltip.barium.enable_aggressive_optimization": "Enables very aggressive optimizations that may skip GUI rendering when unchanged. Use with caution as it may cause visual glitches.",
-
   "category.barium.chunk_performance": "Chunk Performance",
   "category.barium.culling_lod": "Culling & LOD",
   "category.barium.particles": "Particles",
@@ -14,14 +11,6 @@
 
   "option.barium.enable_frustum_culling": "Enable Frustum Culling",
   "tooltip.barium.enable_frustum_culling": "Prevents the game from rebuilding chunks that are not inside the camera's view.\nReduces CPU load when turning around.",
-  "option.barium.effective_render_distance": "Effective Render Distance (0 = disabled)",
-  "tooltip.barium.effective_render_distance": "Forces the engine to behave as if the render distance was this value. 0 disables this behavior.",
-  "option.barium.sparse_chunk_factor": "Sparse Chunk Factor",
-  "tooltip.barium.sparse_chunk_factor": "When >1, only renders chunks on a coarser grid (e.g. 2 = every other chunk). Helps simulate lower render distance while keeping broader coverage.",
-  "option.barium.detailed_render_radius": "Detailed Render Radius",
-  "tooltip.barium.detailed_render_radius": "Chunks inside this radius are updated at full rate; those outside are updated less frequently to save CPU.",
-  "option.barium.chunk_update_skip_rate": "Chunk Update Skip Rate",
-  "tooltip.barium.chunk_update_skip_rate": "How many ticks to skip between updates for distant chunks (1 = update every tick). Higher values reduce CPU usage but increase visual staleness.",
 
   "option.barium.enable_chunk_update_throttling": "Enable Chunk Update Throttling",
   "tooltip.barium.enable_chunk_update_throttling": "Limits how many chunks are sent to the GPU per frame.\nReduces stutters when moving or turning quickly.",
@@ -100,14 +89,8 @@
   "tooltip.barium.disable_translucent_rendering": "Disables rendering of all translucent blocks like glass and water.\nProvides a significant FPS boost at the cost of visuals.",
   "option.barium.disable_texture_animations": "Disable Texture Animations",
   "tooltip.barium.disable_texture_animations": "Freezes animated textures (water, lava, portals) to save a small amount of CPU.",
-  "option.barium.enable_gui_optimization": "Enable GUI Optimization",
-  "tooltip.barium.enable_gui_optimization": "Optimizes GUI rendering performance, similar to Sodium's optimizations. Reduces overhead when rendering interface elements.",
   "option.barium.mipmap_level_override": "Mipmap Level Override (0-4)",
   "tooltip.barium.mipmap_level_override": "Forces a lower texture resolution. Higher values reduce VRAM usage and can improve FPS with resource packs, but make textures blurrier.\nRequires a game restart. 0=Off.",
-  "option.barium.enable_hand_render_throttling": "Enable Hand Render Throttling",
-  "tooltip.barium.enable_hand_render_throttling": "Adaptive mode: only throttles hand frames under low FPS + fast camera rotation, avoiding consecutive skips to reduce flicker.",
-  "option.barium.hand_render_skip_frames": "Hand Render Skip Frames",
-  "tooltip.barium.hand_render_skip_frames": "How many hand frames to skip between renders. 1 = light, 3 = aggressive.",
 
   "option.barium.enable_entity_tick_culling": "Enable Entity Tick Culling",
   "tooltip.barium.enable_entity_tick_culling": "Reduces the update frequency of distant entities' logic (AI).",
@@ -118,8 +101,6 @@
   "tooltip.barium.reduce_ambient_particles": "Reduces the frequency of ambient particle effects (torch smoke, water drips).",
   "option.barium.enable_hopper_culling": "Enable Hopper Culling",
   "tooltip.barium.enable_hopper_culling": "Reduces the update frequency of distant hoppers. Huge CPU saver for farms.",
-  "option.barium.enable_background_event_throttling": "Enable Background Event Throttling",
-  "tooltip.barium.enable_background_event_throttling": "Uses a 3-phase adaptive pollEvents scheduler in background (fast right after focus loss, normal, then idle-saving).",
 
   "option.barium.enable_flood_fill_culling": "Enable Flood-Fill Culling",
   "tooltip.barium.enable_flood_fill_culling": "A robust algorithm that discovers visible chunks by 'flooding' out from the camera. Very stable and effective, prevents rendering anything the player can't see. Recommended ON.",

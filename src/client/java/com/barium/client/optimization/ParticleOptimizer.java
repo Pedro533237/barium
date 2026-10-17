@@ -1,39 +1,13 @@
 package com.barium.client.optimization;
 
-import com.barium.client.mixin.ParticleAccessor;
 import com.barium.config.BariumConfig;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ParticleOptimizer {
 
-    private static final AtomicInteger particleCount = new AtomicInteger(0);
-
-    public static boolean shouldSkipParticleTick(Particle particle, Vec3d cameraPos) {
+    public static boolean isTooFar(Vec3 cam, double x, double y, double z) {
         if (!BariumConfig.C.ENABLE_PARTICLE_OPTIMIZATION) return false;
-
-        // CORREÇÃO: Usando a interface ParticleAccessor para acessar as coordenadas protegidas.
-        ParticleAccessor accessor = (ParticleAccessor) particle;
-        double distanceSq = cameraPos.squaredDistanceTo(accessor.getX(), accessor.getY(), accessor.getZ());
-        
-        return distanceSq > BariumConfig.C.PARTICLE_CULL_DISTANCE_SQ;
-    }
-    
-    public static boolean shouldCullNewParticle() {
-        return particleCount.get() >= BariumConfig.C.MAX_GLOBAL_PARTICLES;
-    }
-
-    public static void incrementParticleCount() {
-        particleCount.incrementAndGet();
-    }
-
-    public static void decrementParticleCount() {
-        particleCount.updateAndGet(count -> Math.max(0, count - 1));
-    }
-
-    public static void resetParticleCount() {
-        particleCount.set(0);
+        double dx = x - cam.x, dy = y - cam.y, dz = z - cam.z;
+        return dx * dx + dy * dy + dz * dz > BariumConfig.C.PARTICLE_CULL_DISTANCE_SQ;
     }
 }

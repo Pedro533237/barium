@@ -1,9 +1,6 @@
 {
   "title.barium.config": "Configurações do Barium",
 
-  "option.barium.enable_aggressive_optimization": "Otimização Agressiva",
-  "tooltip.barium.enable_aggressive_optimization": "Habilita otimizações muito agressivas que podem pular renderização de GUI quando inalterada. Use com cuidado pois pode causar glitches visuais.",
-
   "category.barium.main": "Otimizações",
   "category.barium.chunk_performance": "Desempenho de Chunks",
   "category.barium.culling_lod": "Otimização de Renderização (Culling & LOD)",
@@ -15,14 +12,6 @@
 
   "option.barium.enable_frustum_culling": "Otimização por Frustum",
   "tooltip.barium.enable_frustum_culling": "Impede que o jogo reconstrua chunks que não estão no campo de visão da câmera. Reduz a carga na CPU ao virar a visão.",
-  "option.barium.effective_render_distance": "Distância de Renderização Efetiva (0 = desativado)",
-  "tooltip.barium.effective_render_distance": "Faz com que o motor se comporte como se a render distance fosse esse valor. 0 desativa.",
-  "option.barium.sparse_chunk_factor": "Fator de Chunk Esparso",
-  "tooltip.barium.sparse_chunk_factor": "Quando >1, renderiza apenas chunks em uma grade mais espaçada (ex: 2 = cada outro chunk). Ajuda a simular distância menor mantendo cobertura ampla.",
-  "option.barium.detailed_render_radius": "Raio de Renderização Detalhada",
-  "tooltip.barium.detailed_render_radius": "Chunks dentro desse raio são atualizados na taxa total; os de fora são atualizados com menos frequência para poupar CPU.",
-  "option.barium.chunk_update_skip_rate": "Taxa de Skip de Atualização de Chunks",
-  "tooltip.barium.chunk_update_skip_rate": "Quantos ticks pular entre atualizações de chunks distantes (1 = atualiza todo tick). Valores maiores reduzem CPU, mas aumentam 'stale' visual.",
 
   "option.barium.enable_visibility_graph_culling": "Otimização por Visibilidade (Experimental)",
   "tooltip.barium.enable_visibility_graph_culling": "Usa um sistema agressivo de raios para renderizar apenas chunks que são realmente visíveis.",
@@ -88,14 +77,8 @@
   
   "option.barium.disable_texture_animations": "Desativar Animações de Textura",
   "tooltip.barium.disable_texture_animations": "Congela texturas animadas (água, lava, portais) para economizar uma pequena quantidade de CPU.",
-  "option.barium.enable_gui_optimization": "Otimização de GUI",
-  "tooltip.barium.enable_gui_optimization": "Otimiza o desempenho de renderização da GUI, similar às otimizações do Sodium. Reduz overhead ao renderizar elementos da interface.",
   "option.barium.mipmap_level_override": "Forçar Nível de Mipmap (0-4)",
   "tooltip.barium.mipmap_level_override": "Força uma resolução de textura menor. Valores maiores reduzem o uso de VRAM e podem melhorar o FPS com pacotes de textura, mas deixam as texturas borradas.\nRequer reinicialização. 0=Desligado.",
-  "option.barium.enable_hand_render_throttling": "Limitar Render da Mão",
-  "tooltip.barium.enable_hand_render_throttling": "Modo adaptativo: só reduz frames da mão sob pressão de FPS e rotação rápida, evitando skip consecutivo para reduzir flicker.",
-  "option.barium.hand_render_skip_frames": "Frames Pulados da Mão",
-  "tooltip.barium.hand_render_skip_frames": "Define quantos frames da mão serão pulados entre renders. 1 = leve, 3 = agressivo.",
   
   "option.barium.enable_entity_tick_culling": "Otimização de Ticks de Entidades",
   "tooltip.barium.enable_entity_tick_culling": "Reduz a frequência de atualização da lógica (IA) de entidades distantes.",
@@ -104,18 +87,5 @@
   "tooltip.barium.reduce_ambient_particles": "Reduz a frequência de efeitos de partículas do ambiente (fumaça de tocha, gotas d'água).",
 
   "option.barium.enable_hopper_culling": "Otimização de Funis",
-  "tooltip.barium.enable_hopper_culling": "Reduz a frequência de atualização de funis distantes. Grande economia de CPU para farms.",
-  "option.barium.enable_background_event_throttling": "Limitar Eventos em Segundo Plano",
-  "tooltip.barium.enable_background_event_throttling": "Usa um agendador adaptativo em 3 fases para pollEvents no background (rápido ao perder foco, normal em seguida, e econômico em idle).",
-
-  "option.barium.disable_entity_outlines": "Desativar Efeito de Brilho",
-  "tooltip.barium.disable_entity_outlines": "Desativa completamente o efeito de contorno brilhante.",
-  "option.barium.enable_half_res_outlines": "Efeito de Brilho em Meia Resolução",
-  "tooltip.barium.enable_half_res_outlines": "Renderiza o efeito de brilho em meia resolução para melhor desempenho.",
-
-  "option.barium.enable_rotation_throttling": "Otimização de Rotação Dinâmica",
-  "tooltip.barium.enable_rotation_throttling": "Suspende o carregamento de novos chunks enquanto você gira a câmera rapidamente.\nElimina travamentos ao olhar ao redor.",
-
-  "option.barium.enable_fast_math": "Fast Math (Matemática Rápida)",
-  "tooltip.barium.enable_fast_math": "Usa tabelas pré-calculadas para seno e cosseno.\nMelhora levemente o FPS geral e a geração de terreno."
+  "tooltip.barium.enable_hopper_culling": "Reduz a frequência de atualização de funis distantes. Grande economia de CPU para farms."
 }
